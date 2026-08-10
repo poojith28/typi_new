@@ -1,0 +1,28 @@
+# Cache and data directories
+.cache/
+.conda/
+.venv_diag/
+.vscode/
+idpc_cache/
+merge_tree_cover_cache/
+topocover_cache/
+topocover_cache_d070/
+topocover_cache_paper/
+topocover_cache_variants/
+maxherding_50b_20260528/
+
+# Generated outputs
+outputs/
+results/
+figures/
+posthoc_graph_diagnostics/
+
+# Large data
+evidence_pack/
+backups/
+
+# Temporary files
+*.err
+*.out
+*.vsix
+1ca9ade29136f7e2bc3db142e2e7ae3a55541142463c281b75ddae3912195082

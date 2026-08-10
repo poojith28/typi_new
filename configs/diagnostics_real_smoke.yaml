@@ -1,0 +1,56 @@
+output_root: results/posthoc_graph_diagnostics_realsmoke
+cache_dir: .cache/posthoc_graph_diagnostics_realsmoke
+
+random_seed: 0
+n_jobs: 4
+
+lid_k_values: [10, 50]
+id_metric: euclidean
+id_quantiles: [10, 25, 50, 75, 90]
+
+h0_metric: euclidean
+h0_max_exact_n: 4000
+h0_knn_k: 20
+h0_epsilon_grid_points: 30
+h0_num_random_controls: 20
+h0_scope: cumulative
+
+graph_k_values: [10, 20]
+graph_metric: euclidean
+graph_weighting: inverse_distance
+betweenness_max_exact_n: 2000
+betweenness_sample_size: 200
+compute_distance_to_nearest_selected: true
+distance_to_nearest_selected_max_n: 200000
+
+community_method: louvain
+community_coverage_thresholds: [50, 75, 90]
+
+early_round_cutoff: 3
+bootstrap_n: 200
+bootstrap_ci: 0.95
+
+use_approx_knn: true
+approx_knn_min_n: 5000
+ann_nprobe: 16
+
+use_faiss: true
+figure_dpi: 150
+figure_format: pdf
+max_points_dense: 20000
+
+runs:
+  - dataset: CIFAR10
+    backbone: alexnet
+    method: LIDCOVER
+    seed: 1
+    budget: 50
+    embeddings_path: /vast/s219110279/results/results/alexnet/cifar-10/pretext/features_seed1.npy
+    labels_path: /vast/s219110279/results/results/alexnet/cifar-10/pretext/labels_seed1.npy
+    method_family: coverage
+    selection:
+      type: lset_episodes
+      experiment_dir: /vast/s219110279/TypiClust/output/CIFAR10/alexnet/LIDCOVER_1_50b
+    accuracy:
+      type: episode_json
+      path: /vast/s219110279/TypiClust/output/CIFAR10/alexnet/LIDCOVER_1_50b

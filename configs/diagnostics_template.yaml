@@ -1,0 +1,203 @@
+# =============================================================================
+# posthoc_graph_diagnostics -- configuration template
+# =============================================================================
+# Copy this file (e.g. to configs/diagnostics.yaml) and edit the `run_matrix`
+# and/or `runs` sections to point at your active-learning output directories.
+# See README_diagnostics.md at the repo root for a full explanation of every
+# field and of the expected input/output layouts.
+#
+# Run with:
+#   python -m posthoc_graph_diagnostics.run --config configs/diagnostics.yaml
+# =============================================================================
+
+# Where per-run CSVs/figures are written (relative paths are resolved
+# relative to this config file's directory).
+output_root: results/posthoc_graph_diagnostics
+
+# Where expensive embedding-only computations (reference LID, H0 reference
+# events, kNN graphs, node graph metrics, communities, label metrics) are
+# cached. Cache keys are derived from the embeddings/labels file path, size
+# and mtime, NOT their full content, so it stays cheap even for huge files.
+cache_dir: .cache/posthoc_graph_diagnostics
+
+random_seed: 0
+n_jobs: 4
+
+# --------------------------------------------------------------------------
+# 1. Intrinsic dimensionality (Levina-Bickel)
+# --------------------------------------------------------------------------
+lid_k_values: [10, 20, 50, 100]
+id_metric: euclidean          # euclidean | cosine
+id_quantiles: [10, 25, 50, 75, 90]
+
+# --------------------------------------------------------------------------
+# 2. H0 graph-filtration diagnostics
+# --------------------------------------------------------------------------
+h0_metric: euclidean
+h0_max_exact_n: 4000           # <= this: exact dense-distance MST
+h0_knn_k: 50                   # >  this: approximate kNN-graph MST with this k
+h0_epsilon_grid_points: 50
+h0_num_random_controls: 100    # same-cardinality random subsets per round
+h0_scope: cumulative           # cumulative | batch | both
+
+# --------------------------------------------------------------------------
+# 3. kNN graph structural metrics
+# --------------------------------------------------------------------------
+graph_k_values: [10, 20, 50]
+graph_metric: euclidean
+graph_weighting: inverse_distance   # inverse_distance | gaussian | binary
+betweenness_max_exact_n: 2000       # >  this: sampled/approximate betweenness
+betweenness_sample_size: 500
+compute_distance_to_nearest_selected: true
+distance_to_nearest_selected_max_n: 200000  # skip this (costly) stat above this N
+
+# --------------------------------------------------------------------------
+# 4. Community detection
+# --------------------------------------------------------------------------
+community_method: louvain      # louvain | greedy_modularity | label_propagation
+community_coverage_thresholds: [50, 75, 90]
+
+# --------------------------------------------------------------------------
+# 5. Label-neighbourhood impurity (only computed when labels are available)
+# --------------------------------------------------------------------------
+# label_k_values: [10, 20, 50]  # defaults to graph_k_values if omitted
+
+# --------------------------------------------------------------------------
+# 6. Performance correlation (used by the `aggregate` CLI)
+# --------------------------------------------------------------------------
+early_round_cutoff: 3
+bootstrap_n: 1000
+bootstrap_ci: 0.95
+
+# --------------------------------------------------------------------------
+# Approximate nearest-neighbour search (only matters when faiss is installed)
+# --------------------------------------------------------------------------
+# Exact brute-force kNN is O(N^2 * d); for high-dimensional features (e.g.
+# 4096-d AlexNet fc7) and N in the 10^4-10^5 range this becomes impractical.
+# Above `approx_knn_min_n` points, an IVF-Flat FAISS index is used instead
+# (small, documented recall cost for an order-of-magnitude speedup).
+use_approx_knn: true
+approx_knn_min_n: 20000
+# ann_nlist: null       # default: min(4096, 4*sqrt(N))
+ann_nprobe: 16
+
+# --------------------------------------------------------------------------
+# Misc / infra
+# --------------------------------------------------------------------------
+use_faiss: true
+figure_dpi: 300
+figure_format: pdf
+max_points_dense: 20000
+
+# Optional: used by the `method_family_summary` output in `aggregate`.
+method_family_map:
+  random: baseline
+  uncertainty: uncertainty
+  entropy: uncertainty
+  margin: uncertainty
+  dbal: uncertainty
+  coreset: diversity
+  maxherding: diversity
+  probcover: coverage
+  idprobcover: coverage
+  LIDCOVER: coverage
+  density_cover: coverage
+  knn_distance_cover: coverage
+  distance_variance_cover: coverage
+  distance_cv_cover: coverage
+
+# =============================================================================
+# run_matrix: templated cross-product of dataset x backbone x method x seed.
+# This matches the on-disk layout of a TypiClust-style deep-al output tree:
+#
+#   <experiment_root>/<dataset>/<backbone>/<method>_<seed>_<budget>b/
+#       episode_<r>/{lSet.npy, activeSet.npy, uSet.npy, episode_summary.json}
+#
+# and a SCAN-style embeddings tree:
+#
+#   <embeddings_root>/<backbone>/<embeddings_slug>/pretext/features_seed<seed>.npy
+#   <embeddings_root>/<backbone>/<embeddings_slug>/pretext/labels_seed1.npy
+#
+# Adjust the templates below (or switch to explicit `runs:` entries) to match
+# your own layout. Any run whose files are missing is skipped with a warning
+# rather than crashing the whole sweep.
+# =============================================================================
+run_matrix:
+  datasets:
+    - name: CIFAR10
+      embeddings_slug: cifar-10
+    - name: CIFAR100
+      embeddings_slug: cifar-100
+    - name: TINYIMAGENET
+      embeddings_slug: tiny-imagenet
+
+  backbones: [alexnet, resnet18, resnet50]
+
+  methods:
+    - random
+    - uncertainty
+    - entropy
+    - margin
+    - coreset
+    - dbal
+    - probcover
+    - knn_distance_cover
+    - density_cover
+    - distance_variance_cover
+    - distance_cv_cover
+    - LIDCOVER
+    - maxherding
+
+  seeds: [1, 2, 3, 4, 5]
+  budget: 50
+
+  embeddings_root: /vast/s219110279/results/results
+  embeddings_template: "{embeddings_root}/{backbone}/{embeddings_slug}/pretext/features_seed{seed}.npy"
+  # Labels are typically only dumped once (seed1) per dataset/backbone.
+  labels_template: "{embeddings_root}/{backbone}/{embeddings_slug}/pretext/labels_seed1.npy"
+
+  experiment_root: /vast/s219110279/TypiClust/output
+  experiment_template: "{experiment_root}/{dataset}/{backbone}/{method}_{seed}_{budget}b"
+
+  selection_type: lset_episodes   # experiment_dir/episode_<r>/lSet.npy (+ episode_summary.json)
+  accuracy_type: episode_json     # experiment_dir/episode_<r>/episode_summary.json
+
+# =============================================================================
+# runs: explicit, one-off run entries (appended after run_matrix expansion).
+# Useful for odd paths that don't fit the template, or for a single quick run.
+# Delete or comment this whole block out if you only need `run_matrix`.
+# =============================================================================
+# runs:
+#   - dataset: CIFAR10
+#     backbone: alexnet
+#     method: LIDCOVER
+#     seed: 1
+#     budget: 50
+#     embeddings_path: /vast/s219110279/results/results/alexnet/cifar-10/pretext/features_seed1.npy
+#     labels_path: /vast/s219110279/results/results/alexnet/cifar-10/pretext/labels_seed1.npy
+#     method_family: coverage
+#     selection:
+#       type: lset_episodes
+#       experiment_dir: /vast/s219110279/TypiClust/output/CIFAR10/alexnet/LIDCOVER_1_50b
+#       # initial_lset_path: /path/to/seed_pool_lSet.npy   # only if episode_0 is missing
+#     accuracy:
+#       type: episode_json
+#       path: /vast/s219110279/TypiClust/output/CIFAR10/alexnet/LIDCOVER_1_50b
+#
+#   # Example of the picks_dir loader (batch-only pick files, not cumulative):
+#   - dataset: CIFAR100
+#     backbone: resnet18
+#     method: my_custom_method
+#     seed: 2
+#     embeddings_path: /path/to/features.npy
+#     labels_path: /path/to/labels.npy
+#     selection:
+#       type: picks_dir
+#       picks_glob: "/path/to/picks/round_*.npy"
+#       picks_round_regex: "(\\d+)"
+#       cumulative: false
+#     accuracy:
+#       type: csv
+#       path: /path/to/accuracy_log.csv
+#       csv_round_col: round
+#       csv_accuracy_col: test_accuracy

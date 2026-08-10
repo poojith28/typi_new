@@ -1,0 +1,132 @@
+# =============================================================================
+# posthoc_graph_diagnostics -- active config (derived from diagnostics_template.yaml)
+# =============================================================================
+# Run with:
+#   sbatch --export=ALL,CONFIG=/vast/s219110279/configs/diagnostics.yaml \
+#       posthoc_graph_diagnostics/slurm/run_diagnostics.sbatch
+# =============================================================================
+
+output_root: /vast/s219110279/results/posthoc_graph_diagnostics
+cache_dir: /vast/s219110279/.cache/posthoc_graph_diagnostics
+
+random_seed: 0
+n_jobs: 4
+
+# --------------------------------------------------------------------------
+# 1. Intrinsic dimensionality (Levina-Bickel)
+# --------------------------------------------------------------------------
+lid_k_values: [10, 20, 50, 100]
+id_metric: euclidean
+id_quantiles: [10, 25, 50, 75, 90]
+
+# --------------------------------------------------------------------------
+# 2. H0 graph-filtration diagnostics
+# --------------------------------------------------------------------------
+h0_metric: euclidean
+h0_max_exact_n: 4000
+h0_knn_k: 50
+h0_epsilon_grid_points: 50
+h0_num_random_controls: 100
+h0_scope: cumulative
+
+# --------------------------------------------------------------------------
+# 3. kNN graph structural metrics
+# --------------------------------------------------------------------------
+graph_k_values: [10, 20, 50]
+graph_metric: euclidean
+graph_weighting: inverse_distance
+betweenness_max_exact_n: 2000
+betweenness_sample_size: 500
+compute_distance_to_nearest_selected: true
+distance_to_nearest_selected_max_n: 200000
+
+# --------------------------------------------------------------------------
+# 4. Community detection
+# --------------------------------------------------------------------------
+community_method: louvain
+community_coverage_thresholds: [50, 75, 90]
+
+# --------------------------------------------------------------------------
+# 5. Label-neighbourhood impurity
+# --------------------------------------------------------------------------
+# label_k_values: [10, 20, 50]  # defaults to graph_k_values if omitted
+
+# --------------------------------------------------------------------------
+# 6. Performance correlation (used by the `aggregate` CLI)
+# --------------------------------------------------------------------------
+early_round_cutoff: 3
+bootstrap_n: 1000
+bootstrap_ci: 0.95
+
+# --------------------------------------------------------------------------
+# Nearest-neighbour search
+# --------------------------------------------------------------------------
+# false = exact FAISS/sklearn kNN over the full embedding pool (no IVF ANN).
+# This still uses all N points; it is slower but avoids approximate kNN search.
+use_approx_knn: false
+approx_knn_min_n: 20000
+# ann_nlist: null
+ann_nprobe: 16
+
+# --------------------------------------------------------------------------
+# Misc / infra
+# --------------------------------------------------------------------------
+use_faiss: true
+figure_dpi: 300
+figure_format: pdf
+max_points_dense: 20000
+
+method_family_map:
+  random: baseline
+  uncertainty: uncertainty
+  entropy: uncertainty
+  margin: uncertainty
+  dbal: uncertainty
+  coreset: diversity
+  maxherding: diversity
+  probcover: coverage
+  idprobcover: coverage
+  LIDCOVER: coverage
+
+# =============================================================================
+# run_matrix: templated cross-product of dataset x backbone x method x seed.
+#
+# Full backbone sweep for seed 1. Each dataset/backbone pair computes and
+# caches the expensive reference-pool artifacts once, then reuses them across
+# methods. To run all seeds too, change `seeds` to [1, 2, 3, 4, 5]; for very
+# large sweeps, prefer submitting separate jobs per backbone or per seed.
+# =============================================================================
+run_matrix:
+  datasets:
+    - name: CIFAR10
+      embeddings_slug: cifar-10
+    - name: CIFAR100
+      embeddings_slug: cifar-100
+    - name: TINYIMAGENET
+      embeddings_slug: tiny-imagenet
+
+  backbones: [alexnet, resnet18, resnet50]
+
+  methods:
+    - random
+    - uncertainty
+    - entropy
+    - margin
+    - coreset
+    - dbal
+    - probcover
+    - LIDCOVER
+    - maxherding
+
+  seeds: [1, 2, 3, 4, 5]
+  budget: 50
+
+  embeddings_root: /vast/s219110279/results/results
+  embeddings_template: "{embeddings_root}/{backbone}/{embeddings_slug}/pretext/features_seed{seed}.npy"
+  labels_template: "{embeddings_root}/{backbone}/{embeddings_slug}/pretext/labels_seed1.npy"
+
+  experiment_root: /vast/s219110279/TypiClust/output
+  experiment_template: "{experiment_root}/{dataset}/{backbone}/{method}_{seed}_{budget}b"
+
+  selection_type: lset_episodes
+  accuracy_type: episode_json
