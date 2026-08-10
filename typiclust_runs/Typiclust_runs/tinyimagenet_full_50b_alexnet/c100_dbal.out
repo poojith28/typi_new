@@ -1,0 +1,970 @@
+GPU 0: Tesla V100-SXM2-32GB (UUID: GPU-1bbbcd4e-48ac-4b26-8697-9839a00bff30)
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Tue May 26 22:17:45 2026
+Driver Version                            : 565.57.01
+CUDA Version                              : 12.7
+
+Attached GPUs                             : 1
+GPU 00000000:07:00.0
+    ECC Mode
+        Current                           : Enabled
+        Pending                           : Enabled
+    ECC Errors
+        Volatile
+            Single Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 0
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+        Aggregate
+            Single Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 0
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+
+Experiment Directory Already Exists: /vast/s219110279/TypiClust/output/TINYIMAGENET/resnet50/dbal_1_50b. Reusing it may lead to loss of old logs in the directory.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomResizedCrop(size=(64, 64), scale=(0.5, 1.0), ratio=(0.75, 1.3333), interpolation=bilinear), antialias=None), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])]
+
+Dataset TINYIMAGENET Loaded Sucessfully.
+Total Train Size: 100000 and Total Test Size: 10000
+
+Data Partitioning Complete. 
+Labeled Set: 50, Unlabeled Set: 94950, Validation Set: 5000
+
+model: resnet50
+
+optimizer: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: False
+    lr: 0.001
+    maximize: False
+    weight_decay: 0.0003
+)
+
+AL Query Method: dbal
+Max AL Episodes: 100
+
+======== EPISODE 0 BEGINS ========
+
+======== TRAINING ========
+Training Epoch: 1/200	Train Loss: 5.5941	Val Accuracy: 0.0
+Training Epoch: 2/200	Train Loss: 3.8894	Val Accuracy: 0.56
+Training Epoch: 3/200	Train Loss: 3.6958	Val Accuracy: 0.56
+Training Epoch: 4/200	Train Loss: 3.7271	Val Accuracy: 0.6
+Training Epoch: 5/200	Train Loss: 3.3852	Val Accuracy: 0.6
+Training Epoch: 6/200	Train Loss: 3.1994	Val Accuracy: 0.64
+Training Epoch: 7/200	Train Loss: 3.5073	Val Accuracy: 0.64
+Training Epoch: 8/200	Train Loss: 2.7133	Val Accuracy: 0.56
+Training Epoch: 9/200	Train Loss: 2.6916	Val Accuracy: 0.56
+Training Epoch: 10/200	Train Loss: 2.4152	Val Accuracy: 0.6
+Training Epoch: 11/200	Train Loss: 2.3624	Val Accuracy: 0.6
+Training Epoch: 12/200	Train Loss: 2.1355	Val Accuracy: 0.74
+Training Epoch: 13/200	Train Loss: 1.8513	Val Accuracy: 0.74
+Training Epoch: 14/200	Train Loss: 1.685	Val Accuracy: 0.6
+Training Epoch: 15/200	Train Loss: 1.4815	Val Accuracy: 0.6
+Training Epoch: 16/200	Train Loss: 1.2568	Val Accuracy: 0.62
+Training Epoch: 17/200	Train Loss: 1.0362	Val Accuracy: 0.62
+Training Epoch: 18/200	Train Loss: 0.8753	Val Accuracy: 0.72
+Training Epoch: 19/200	Train Loss: 0.7325	Val Accuracy: 0.72
+Training Epoch: 20/200	Train Loss: 0.6112	Val Accuracy: 0.6
+Training Epoch: 21/200	Train Loss: 0.4378	Val Accuracy: 0.6
+Training Epoch: 22/200	Train Loss: 0.4192	Val Accuracy: 0.62
+Training Epoch: 23/200	Train Loss: 0.4351	Val Accuracy: 0.62
+Training Epoch: 24/200	Train Loss: 0.3035	Val Accuracy: 0.68
+Training Epoch: 25/200	Train Loss: 0.1797	Val Accuracy: 0.68
+Training Epoch: 26/200	Train Loss: 0.2013	Val Accuracy: 0.9
+Training Epoch: 27/200	Train Loss: 0.2535	Val Accuracy: 0.9
+Training Epoch: 28/200	Train Loss: 0.1291	Val Accuracy: 0.98
+Training Epoch: 29/200	Train Loss: 0.0938	Val Accuracy: 0.98
+Training Epoch: 30/200	Train Loss: 0.0928	Val Accuracy: 0.9
+Training Epoch: 31/200	Train Loss: 0.0939	Val Accuracy: 0.9
+Training Epoch: 32/200	Train Loss: 0.0442	Val Accuracy: 0.78
+Training Epoch: 33/200	Train Loss: 0.0885	Val Accuracy: 0.78
+Training Epoch: 34/200	Train Loss: 0.0949	Val Accuracy: 1.02
+Training Epoch: 35/200	Train Loss: 0.1803	Val Accuracy: 1.02
+Training Epoch: 36/200	Train Loss: 0.0741	Val Accuracy: 1.34
+Training Epoch: 37/200	Train Loss: 0.1303	Val Accuracy: 1.34
+Training Epoch: 38/200	Train Loss: 0.086	Val Accuracy: 1.74
+Training Epoch: 39/200	Train Loss: 0.1712	Val Accuracy: 1.74
+Training Epoch: 40/200	Train Loss: 0.0957	Val Accuracy: 1.6
+Training Epoch: 41/200	Train Loss: 0.1583	Val Accuracy: 1.6
+Training Epoch: 42/200	Train Loss: 0.0792	Val Accuracy: 1.64
+Training Epoch: 43/200	Train Loss: 0.0608	Val Accuracy: 1.64
+Training Epoch: 44/200	Train Loss: 0.1024	Val Accuracy: 1.7
+Training Epoch: 45/200	Train Loss: 0.0674	Val Accuracy: 1.7
+Training Epoch: 46/200	Train Loss: 0.0403	Val Accuracy: 1.5
+Training Epoch: 47/200	Train Loss: 0.0473	Val Accuracy: 1.5
+Training Epoch: 48/200	Train Loss: 0.0834	Val Accuracy: 1.46
+Training Epoch: 49/200	Train Loss: 0.0375	Val Accuracy: 1.46
+Training Epoch: 50/200	Train Loss: 0.0767	Val Accuracy: 1.64
+Training Epoch: 51/200	Train Loss: 0.0613	Val Accuracy: 1.64
+Training Epoch: 52/200	Train Loss: 0.1369	Val Accuracy: 1.82
+Training Epoch: 53/200	Train Loss: 0.0371	Val Accuracy: 1.82
+Training Epoch: 54/200	Train Loss: 0.0472	Val Accuracy: 1.62
+Training Epoch: 55/200	Train Loss: 0.0665	Val Accuracy: 1.62
+Training Epoch: 56/200	Train Loss: 0.0625	Val Accuracy: 1.76
+Training Epoch: 57/200	Train Loss: 0.0483	Val Accuracy: 1.76
+Training Epoch: 58/200	Train Loss: 0.1074	Val Accuracy: 1.86
+Training Epoch: 59/200	Train Loss: 0.0189	Val Accuracy: 1.86
+Training Epoch: 60/200	Train Loss: 0.2561	Val Accuracy: 1.76
+Training Epoch: 61/200	Train Loss: 0.1233	Val Accuracy: 1.76
+Training Epoch: 62/200	Train Loss: 0.0566	Val Accuracy: 2.0
+Training Epoch: 63/200	Train Loss: 0.1219	Val Accuracy: 2.0
+Training Epoch: 64/200	Train Loss: 0.0497	Val Accuracy: 1.86
+Training Epoch: 65/200	Train Loss: 0.0276	Val Accuracy: 1.86
+Training Epoch: 66/200	Train Loss: 0.0421	Val Accuracy: 1.78
+Training Epoch: 67/200	Train Loss: 0.1017	Val Accuracy: 1.78
+Training Epoch: 68/200	Train Loss: 0.0531	Val Accuracy: 1.82
+Training Epoch: 69/200	Train Loss: 0.1153	Val Accuracy: 1.82
+Training Epoch: 70/200	Train Loss: 0.016	Val Accuracy: 1.56
+Training Epoch: 71/200	Train Loss: 0.0781	Val Accuracy: 1.56
+Training Epoch: 72/200	Train Loss: 0.1434	Val Accuracy: 1.54
+Training Epoch: 73/200	Train Loss: 0.0943	Val Accuracy: 1.54
+Training Epoch: 74/200	Train Loss: 0.0344	Val Accuracy: 1.84
+Training Epoch: 75/200	Train Loss: 0.0833	Val Accuracy: 1.84
+Training Epoch: 76/200	Train Loss: 0.1114	Val Accuracy: 1.68
+Training Epoch: 77/200	Train Loss: 0.1321	Val Accuracy: 1.68
+Training Epoch: 78/200	Train Loss: 0.1883	Val Accuracy: 1.84
+Training Epoch: 79/200	Train Loss: 0.0703	Val Accuracy: 1.84
+Training Epoch: 80/200	Train Loss: 0.0443	Val Accuracy: 2.02
+Training Epoch: 81/200	Train Loss: 0.0742	Val Accuracy: 2.02
+Training Epoch: 82/200	Train Loss: 0.0586	Val Accuracy: 1.92
+Training Epoch: 83/200	Train Loss: 0.0302	Val Accuracy: 1.92
+Training Epoch: 84/200	Train Loss: 0.0443	Val Accuracy: 1.96
+Training Epoch: 85/200	Train Loss: 0.031	Val Accuracy: 1.96
+Training Epoch: 86/200	Train Loss: 0.0304	Val Accuracy: 2.06
+Training Epoch: 87/200	Train Loss: 0.0897	Val Accuracy: 2.06
+Training Epoch: 88/200	Train Loss: 0.0382	Val Accuracy: 1.9
+Training Epoch: 89/200	Train Loss: 0.0342	Val Accuracy: 1.9
+Training Epoch: 90/200	Train Loss: 0.0651	Val Accuracy: 1.66
+Training Epoch: 91/200	Train Loss: 0.0534	Val Accuracy: 1.66
+Training Epoch: 92/200	Train Loss: 0.0236	Val Accuracy: 2.12
+Training Epoch: 93/200	Train Loss: 0.0084	Val Accuracy: 2.12
+Training Epoch: 94/200	Train Loss: 0.0476	Val Accuracy: 2.02
+Training Epoch: 95/200	Train Loss: 0.0824	Val Accuracy: 2.02
+Training Epoch: 96/200	Train Loss: 0.02	Val Accuracy: 2.32
+Training Epoch: 97/200	Train Loss: 0.0155	Val Accuracy: 2.32
+Training Epoch: 98/200	Train Loss: 0.0125	Val Accuracy: 2.02
+Training Epoch: 99/200	Train Loss: 0.0161	Val Accuracy: 2.02
+Training Epoch: 100/200	Train Loss: 0.0036	Val Accuracy: 1.96
+Training Epoch: 101/200	Train Loss: 0.006	Val Accuracy: 1.96
+Training Epoch: 102/200	Train Loss: 0.0207	Val Accuracy: 1.98
+Training Epoch: 103/200	Train Loss: 0.0063	Val Accuracy: 1.98
+Training Epoch: 104/200	Train Loss: 0.0404	Val Accuracy: 2.04
+Training Epoch: 105/200	Train Loss: 0.0056	Val Accuracy: 2.04
+Training Epoch: 106/200	Train Loss: 0.0084	Val Accuracy: 1.76
+Training Epoch: 107/200	Train Loss: 0.0121	Val Accuracy: 1.76
+Training Epoch: 108/200	Train Loss: 0.0379	Val Accuracy: 1.94
+Training Epoch: 109/200	Train Loss: 0.0146	Val Accuracy: 1.94
+Training Epoch: 110/200	Train Loss: 0.0039	Val Accuracy: 2.04
+Training Epoch: 111/200	Train Loss: 0.0091	Val Accuracy: 2.04
+Training Epoch: 112/200	Train Loss: 0.0192	Val Accuracy: 2.02
+Training Epoch: 113/200	Train Loss: 0.0138	Val Accuracy: 2.02
+Training Epoch: 114/200	Train Loss: 0.093	Val Accuracy: 2.06
+Training Epoch: 115/200	Train Loss: 0.003	Val Accuracy: 2.06
+Training Epoch: 116/200	Train Loss: 0.005	Val Accuracy: 1.94
+Training Epoch: 117/200	Train Loss: 0.2159	Val Accuracy: 1.94
+Training Epoch: 118/200	Train Loss: 0.0401	Val Accuracy: 1.9
+Training Epoch: 119/200	Train Loss: 0.1127	Val Accuracy: 1.9
+Training Epoch: 120/200	Train Loss: 0.1952	Val Accuracy: 1.76
+Training Epoch: 121/200	Train Loss: 0.116	Val Accuracy: 1.76
+Training Epoch: 122/200	Train Loss: 0.1797	Val Accuracy: 1.66
+Training Epoch: 123/200	Train Loss: 0.0323	Val Accuracy: 1.66
+Training Epoch: 124/200	Train Loss: 0.0722	Val Accuracy: 1.5
+Training Epoch: 125/200	Train Loss: 0.1285	Val Accuracy: 1.5
+Training Epoch: 126/200	Train Loss: 0.0541	Val Accuracy: 1.64
+Training Epoch: 127/200	Train Loss: 0.0521	Val Accuracy: 1.64
+Training Epoch: 128/200	Train Loss: 0.0166	Val Accuracy: 1.7
+Training Epoch: 129/200	Train Loss: 0.0338	Val Accuracy: 1.7
+Training Epoch: 130/200	Train Loss: 0.0288	Val Accuracy: 2.0
+Training Epoch: 131/200	Train Loss: 0.0402	Val Accuracy: 2.0
+Training Epoch: 132/200	Train Loss: 0.0156	Val Accuracy: 1.98
+Training Epoch: 133/200	Train Loss: 0.0758	Val Accuracy: 1.98
+Training Epoch: 134/200	Train Loss: 0.0838	Val Accuracy: 1.82
+Training Epoch: 135/200	Train Loss: 0.0158	Val Accuracy: 1.82
+Training Epoch: 136/200	Train Loss: 0.0169	Val Accuracy: 1.78
+Training Epoch: 137/200	Train Loss: 0.0298	Val Accuracy: 1.78
+Training Epoch: 138/200	Train Loss: 0.0848	Val Accuracy: 1.76
+Training Epoch: 139/200	Train Loss: 0.0182	Val Accuracy: 1.76
+Training Epoch: 140/200	Train Loss: 0.0175	Val Accuracy: 1.74
+Training Epoch: 141/200	Train Loss: 0.0123	Val Accuracy: 1.74
+Training Epoch: 142/200	Train Loss: 0.0727	Val Accuracy: 1.88
+Training Epoch: 143/200	Train Loss: 0.0051	Val Accuracy: 1.88
+Training Epoch: 144/200	Train Loss: 0.0203	Val Accuracy: 1.74
+Training Epoch: 145/200	Train Loss: 0.0821	Val Accuracy: 1.74
+Training Epoch: 146/200	Train Loss: 0.0472	Val Accuracy: 2.16
+Training Epoch: 147/200	Train Loss: 0.0076	Val Accuracy: 2.16
+Training Epoch: 148/200	Train Loss: 0.094	Val Accuracy: 2.06
+Training Epoch: 149/200	Train Loss: 0.0538	Val Accuracy: 2.06
+Training Epoch: 150/200	Train Loss: 0.0627	Val Accuracy: 2.02
+Training Epoch: 151/200	Train Loss: 0.0186	Val Accuracy: 2.02
+Training Epoch: 152/200	Train Loss: 0.0246	Val Accuracy: 1.88
+Training Epoch: 153/200	Train Loss: 0.0191	Val Accuracy: 1.88
+Training Epoch: 154/200	Train Loss: 0.0427	Val Accuracy: 1.84
+Training Epoch: 155/200	Train Loss: 0.0209	Val Accuracy: 1.84
+Training Epoch: 156/200	Train Loss: 0.0473	Val Accuracy: 1.82
+Training Epoch: 157/200	Train Loss: 0.0195	Val Accuracy: 1.82
+Training Epoch: 158/200	Train Loss: 0.0054	Val Accuracy: 2.1
+Training Epoch: 159/200	Train Loss: 0.019	Val Accuracy: 2.1
+Training Epoch: 160/200	Train Loss: 0.0086	Val Accuracy: 1.9
+Training Epoch: 161/200	Train Loss: 0.0176	Val Accuracy: 1.9
+Training Epoch: 162/200	Train Loss: 0.0236	Val Accuracy: 1.76
+Training Epoch: 163/200	Train Loss: 0.0244	Val Accuracy: 1.76
+Training Epoch: 164/200	Train Loss: 0.0206	Val Accuracy: 1.74
+Training Epoch: 165/200	Train Loss: 0.017	Val Accuracy: 1.74
+Training Epoch: 166/200	Train Loss: 0.0086	Val Accuracy: 1.86
+Training Epoch: 167/200	Train Loss: 0.0279	Val Accuracy: 1.86
+Training Epoch: 168/200	Train Loss: 0.0114	Val Accuracy: 1.74
+Training Epoch: 169/200	Train Loss: 0.0311	Val Accuracy: 1.74
+Training Epoch: 170/200	Train Loss: 0.0163	Val Accuracy: 1.92
+Training Epoch: 171/200	Train Loss: 0.0093	Val Accuracy: 1.92
+Training Epoch: 172/200	Train Loss: 0.008	Val Accuracy: 1.78
+Training Epoch: 173/200	Train Loss: 0.0142	Val Accuracy: 1.78
+Training Epoch: 174/200	Train Loss: 0.0026	Val Accuracy: 1.72
+Training Epoch: 175/200	Train Loss: 0.0055	Val Accuracy: 1.72
+Training Epoch: 176/200	Train Loss: 0.0086	Val Accuracy: 1.74
+Training Epoch: 177/200	Train Loss: 0.0083	Val Accuracy: 1.74
+Training Epoch: 178/200	Train Loss: 0.0053	Val Accuracy: 1.64
+Training Epoch: 179/200	Train Loss: 0.0034	Val Accuracy: 1.64
+Training Epoch: 180/200	Train Loss: 0.0144	Val Accuracy: 1.78
+Training Epoch: 181/200	Train Loss: 0.0099	Val Accuracy: 1.78
+Training Epoch: 182/200	Train Loss: 0.0103	Val Accuracy: 1.7
+Training Epoch: 183/200	Train Loss: 0.0143	Val Accuracy: 1.7
+Training Epoch: 184/200	Train Loss: 0.0041	Val Accuracy: 1.76
+Training Epoch: 185/200	Train Loss: 0.0627	Val Accuracy: 1.76
+Training Epoch: 186/200	Train Loss: 0.0035	Val Accuracy: 1.94
+Training Epoch: 187/200	Train Loss: 0.0026	Val Accuracy: 1.94
+Training Epoch: 188/200	Train Loss: 0.0166	Val Accuracy: 2.02
+Training Epoch: 189/200	Train Loss: 0.0022	Val Accuracy: 2.02
+Training Epoch: 190/200	Train Loss: 0.0041	Val Accuracy: 1.9
+Training Epoch: 191/200	Train Loss: 0.0395	Val Accuracy: 1.9
+Training Epoch: 192/200	Train Loss: 0.005	Val Accuracy: 2.12
+Training Epoch: 193/200	Train Loss: 0.0059	Val Accuracy: 2.12
+Training Epoch: 194/200	Train Loss: 0.0092	Val Accuracy: 2.1
+Training Epoch: 195/200	Train Loss: 0.0025	Val Accuracy: 2.1
+Training Epoch: 196/200	Train Loss: 0.0048	Val Accuracy: 1.96
+Training Epoch: 197/200	Train Loss: 0.0076	Val Accuracy: 1.96
+Training Epoch: 198/200	Train Loss: 0.0028	Val Accuracy: 2.12
+Training Epoch: 199/200	Train Loss: 0.0502	Val Accuracy: 2.12
+Training Epoch: 200/200	Train Loss: 0.0021	Val Accuracy: 2.02
+
+Wrote Best Model Checkpoint to: vlBest_acc_2_model_epoch_0096.pyth
+
+Best Validation Accuracy: 2.32
+Best Epoch: 96
+
+======== TESTING ========
+
+Test Accuracy: 1.44.
+
+======== ACTIVE SAMPLING ========
+
+len usetLoader: 950
+Active Sampling Complete. After Episode 0:
+New Labeled Set: 100, New Unlabeled Set: 94900, Active Set: 50
+
+================================
+
+
+Current accuracy values:  [1.4399999999999977]
+======== EPISODE 1 BEGINS ========
+
+======== TRAINING ========
+Training Epoch: 1/200	Train Loss: 16.257	Val Accuracy: 0.0
+Training Epoch: 2/200	Train Loss: 10.9434	Val Accuracy: 1.36
+Training Epoch: 3/200	Train Loss: 6.9623	Val Accuracy: 1.36
+Training Epoch: 4/200	Train Loss: 4.0379	Val Accuracy: 0.62
+Training Epoch: 5/200	Train Loss: 2.6812	Val Accuracy: 0.62
+Training Epoch: 6/200	Train Loss: 2.5312	Val Accuracy: 0.62
+Training Epoch: 7/200	Train Loss: 2.6888	Val Accuracy: 0.62
+Training Epoch: 8/200	Train Loss: 2.8595	Val Accuracy: 0.8
+Training Epoch: 9/200	Train Loss: 2.8729	Val Accuracy: 0.8
+Training Epoch: 10/200	Train Loss: 2.6495	Val Accuracy: 0.88
+Training Epoch: 11/200	Train Loss: 2.4445	Val Accuracy: 0.88
+Training Epoch: 12/200	Train Loss: 2.282	Val Accuracy: 0.9
+Training Epoch: 13/200	Train Loss: 1.9771	Val Accuracy: 0.9
+Training Epoch: 14/200	Train Loss: 1.8914	Val Accuracy: 1.28
+Training Epoch: 15/200	Train Loss: 1.6804	Val Accuracy: 1.28
+Training Epoch: 16/200	Train Loss: 1.6005	Val Accuracy: 1.1
+Training Epoch: 17/200	Train Loss: 1.4716	Val Accuracy: 1.1
+Training Epoch: 18/200	Train Loss: 1.3567	Val Accuracy: 1.36
+Training Epoch: 19/200	Train Loss: 1.2787	Val Accuracy: 1.36
+Training Epoch: 20/200	Train Loss: 1.1237	Val Accuracy: 1.6
+Training Epoch: 21/200	Train Loss: 1.028	Val Accuracy: 1.6
+Training Epoch: 22/200	Train Loss: 0.7986	Val Accuracy: 1.76
+Training Epoch: 23/200	Train Loss: 0.8803	Val Accuracy: 1.76
+Training Epoch: 24/200	Train Loss: 0.6696	Val Accuracy: 1.82
+Training Epoch: 25/200	Train Loss: 0.5959	Val Accuracy: 1.82
+Training Epoch: 26/200	Train Loss: 0.6602	Val Accuracy: 1.7
+Training Epoch: 27/200	Train Loss: 0.5571	Val Accuracy: 1.7
+Training Epoch: 28/200	Train Loss: 0.5501	Val Accuracy: 1.58
+Training Epoch: 29/200	Train Loss: 0.4897	Val Accuracy: 1.58
+Training Epoch: 30/200	Train Loss: 0.4647	Val Accuracy: 1.78
+Training Epoch: 31/200	Train Loss: 0.3696	Val Accuracy: 1.78
+Training Epoch: 32/200	Train Loss: 0.3578	Val Accuracy: 1.52
+Training Epoch: 33/200	Train Loss: 0.2549	Val Accuracy: 1.52
+Training Epoch: 34/200	Train Loss: 0.305	Val Accuracy: 1.76
+Training Epoch: 35/200	Train Loss: 0.3324	Val Accuracy: 1.76
+Training Epoch: 36/200	Train Loss: 0.2581	Val Accuracy: 1.56
+Training Epoch: 37/200	Train Loss: 0.2679	Val Accuracy: 1.56
+Training Epoch: 38/200	Train Loss: 0.2398	Val Accuracy: 1.6
+Training Epoch: 39/200	Train Loss: 0.2795	Val Accuracy: 1.6
+Training Epoch: 40/200	Train Loss: 0.3128	Val Accuracy: 1.8
+Training Epoch: 41/200	Train Loss: 0.2451	Val Accuracy: 1.8
+Training Epoch: 42/200	Train Loss: 0.3217	Val Accuracy: 1.68
+Training Epoch: 43/200	Train Loss: 0.3791	Val Accuracy: 1.68
+Training Epoch: 44/200	Train Loss: 0.4366	Val Accuracy: 1.52
+Training Epoch: 45/200	Train Loss: 0.228	Val Accuracy: 1.52
+Training Epoch: 46/200	Train Loss: 0.2497	Val Accuracy: 1.54
+Training Epoch: 47/200	Train Loss: 0.2925	Val Accuracy: 1.54
+Training Epoch: 48/200	Train Loss: 0.2507	Val Accuracy: 1.6
+Training Epoch: 49/200	Train Loss: 0.3153	Val Accuracy: 1.6
+Training Epoch: 50/200	Train Loss: 0.1406	Val Accuracy: 1.84
+Training Epoch: 51/200	Train Loss: 0.2698	Val Accuracy: 1.84
+Training Epoch: 52/200	Train Loss: 0.2408	Val Accuracy: 1.7
+Training Epoch: 53/200	Train Loss: 0.2419	Val Accuracy: 1.7
+Training Epoch: 54/200	Train Loss: 0.1593	Val Accuracy: 1.48
+Training Epoch: 55/200	Train Loss: 0.1706	Val Accuracy: 1.48
+Training Epoch: 56/200	Train Loss: 0.1782	Val Accuracy: 1.64
+Training Epoch: 57/200	Train Loss: 0.1474	Val Accuracy: 1.64
+Training Epoch: 58/200	Train Loss: 0.1001	Val Accuracy: 1.46
+Training Epoch: 59/200	Train Loss: 0.0811	Val Accuracy: 1.46
+Training Epoch: 60/200	Train Loss: 0.1056	Val Accuracy: 1.28
+Training Epoch: 61/200	Train Loss: 0.0949	Val Accuracy: 1.28
+Training Epoch: 62/200	Train Loss: 0.1098	Val Accuracy: 1.6
+Training Epoch: 63/200	Train Loss: 0.1192	Val Accuracy: 1.6
+Training Epoch: 64/200	Train Loss: 0.0699	Val Accuracy: 1.52
+Training Epoch: 65/200	Train Loss: 0.0956	Val Accuracy: 1.52
+Training Epoch: 66/200	Train Loss: 0.1502	Val Accuracy: 1.7
+Training Epoch: 67/200	Train Loss: 0.1525	Val Accuracy: 1.7
+Training Epoch: 68/200	Train Loss: 0.1009	Val Accuracy: 1.6
+Training Epoch: 69/200	Train Loss: 0.1127	Val Accuracy: 1.6
+Training Epoch: 70/200	Train Loss: 0.13	Val Accuracy: 1.82
+Training Epoch: 71/200	Train Loss: 0.2284	Val Accuracy: 1.82
+Training Epoch: 72/200	Train Loss: 0.0404	Val Accuracy: 1.86
+Training Epoch: 73/200	Train Loss: 0.1139	Val Accuracy: 1.86
+Training Epoch: 74/200	Train Loss: 0.1882	Val Accuracy: 2.0
+Training Epoch: 75/200	Train Loss: 0.1227	Val Accuracy: 2.0
+Training Epoch: 76/200	Train Loss: 0.0959	Val Accuracy: 1.76
+Training Epoch: 77/200	Train Loss: 0.0453	Val Accuracy: 1.76
+Training Epoch: 78/200	Train Loss: 0.046	Val Accuracy: 1.78
+Training Epoch: 79/200	Train Loss: 0.1801	Val Accuracy: 1.78
+Training Epoch: 80/200	Train Loss: 0.0948	Val Accuracy: 2.2
+Training Epoch: 81/200	Train Loss: 0.0987	Val Accuracy: 2.2
+Training Epoch: 82/200	Train Loss: 0.0672	Val Accuracy: 2.04
+Training Epoch: 83/200	Train Loss: 0.0809	Val Accuracy: 2.04
+Training Epoch: 84/200	Train Loss: 0.1087	Val Accuracy: 2.12
+Training Epoch: 85/200	Train Loss: 0.1646	Val Accuracy: 2.12
+Training Epoch: 86/200	Train Loss: 0.055	Val Accuracy: 1.9
+Training Epoch: 87/200	Train Loss: 0.057	Val Accuracy: 1.9
+Training Epoch: 88/200	Train Loss: 0.1079	Val Accuracy: 1.7
+Training Epoch: 89/200	Train Loss: 0.1371	Val Accuracy: 1.7
+Training Epoch: 90/200	Train Loss: 0.0639	Val Accuracy: 1.64
+Training Epoch: 91/200	Train Loss: 0.4694	Val Accuracy: 1.64
+Training Epoch: 92/200	Train Loss: 0.1581	Val Accuracy: 1.46
+Training Epoch: 93/200	Train Loss: 0.4118	Val Accuracy: 1.46
+Training Epoch: 94/200	Train Loss: 0.251	Val Accuracy: 1.92
+Training Epoch: 95/200	Train Loss: 0.4736	Val Accuracy: 1.92
+Training Epoch: 96/200	Train Loss: 0.355	Val Accuracy: 2.0
+Training Epoch: 97/200	Train Loss: 0.2155	Val Accuracy: 2.0
+Training Epoch: 98/200	Train Loss: 0.3542	Val Accuracy: 2.12
+Training Epoch: 99/200	Train Loss: 0.2034	Val Accuracy: 2.12
+Training Epoch: 100/200	Train Loss: 0.1582	Val Accuracy: 1.86
+Training Epoch: 101/200	Train Loss: 0.1588	Val Accuracy: 1.86
+Training Epoch: 102/200	Train Loss: 0.0401	Val Accuracy: 2.1
+Training Epoch: 103/200	Train Loss: 0.0885	Val Accuracy: 2.1
+Training Epoch: 104/200	Train Loss: 0.1418	Val Accuracy: 1.96
+Training Epoch: 105/200	Train Loss: 0.1614	Val Accuracy: 1.96
+Training Epoch: 106/200	Train Loss: 0.0683	Val Accuracy: 2.04
+Training Epoch: 107/200	Train Loss: 0.0785	Val Accuracy: 2.04
+Training Epoch: 108/200	Train Loss: 0.1159	Val Accuracy: 1.94
+Training Epoch: 109/200	Train Loss: 0.0448	Val Accuracy: 1.94
+Training Epoch: 110/200	Train Loss: 0.0538	Val Accuracy: 1.6
+Training Epoch: 111/200	Train Loss: 0.1118	Val Accuracy: 1.6
+Training Epoch: 112/200	Train Loss: 0.0839	Val Accuracy: 1.74
+Training Epoch: 113/200	Train Loss: 0.0616	Val Accuracy: 1.74
+Training Epoch: 114/200	Train Loss: 0.1048	Val Accuracy: 1.72
+Training Epoch: 115/200	Train Loss: 0.0375	Val Accuracy: 1.72
+Training Epoch: 116/200	Train Loss: 0.1065	Val Accuracy: 1.92
+Training Epoch: 117/200	Train Loss: 0.0533	Val Accuracy: 1.92
+Training Epoch: 118/200	Train Loss: 0.0488	Val Accuracy: 1.94
+Training Epoch: 119/200	Train Loss: 0.0743	Val Accuracy: 1.94
+Training Epoch: 120/200	Train Loss: 0.0917	Val Accuracy: 1.88
+Training Epoch: 121/200	Train Loss: 0.0518	Val Accuracy: 1.88
+Training Epoch: 122/200	Train Loss: 0.0504	Val Accuracy: 2.1
+Training Epoch: 123/200	Train Loss: 0.0895	Val Accuracy: 2.1
+Training Epoch: 124/200	Train Loss: 0.0597	Val Accuracy: 2.0
+Training Epoch: 125/200	Train Loss: 0.0389	Val Accuracy: 2.0
+Training Epoch: 126/200	Train Loss: 0.0868	Val Accuracy: 1.94
+Training Epoch: 127/200	Train Loss: 0.055	Val Accuracy: 1.94
+Training Epoch: 128/200	Train Loss: 0.0223	Val Accuracy: 2.26
+Training Epoch: 129/200	Train Loss: 0.0256	Val Accuracy: 2.26
+Training Epoch: 130/200	Train Loss: 0.07	Val Accuracy: 1.98
+Training Epoch: 131/200	Train Loss: 0.0418	Val Accuracy: 1.98
+Training Epoch: 132/200	Train Loss: 0.0661	Val Accuracy: 1.84
+Training Epoch: 133/200	Train Loss: 0.0185	Val Accuracy: 1.84
+Training Epoch: 134/200	Train Loss: 0.0346	Val Accuracy: 1.76
+Training Epoch: 135/200	Train Loss: 0.0505	Val Accuracy: 1.76
+Training Epoch: 136/200	Train Loss: 0.0426	Val Accuracy: 1.74
+Training Epoch: 137/200	Train Loss: 0.0181	Val Accuracy: 1.74
+Training Epoch: 138/200	Train Loss: 0.014	Val Accuracy: 1.84
+Training Epoch: 139/200	Train Loss: 0.0511	Val Accuracy: 1.84
+Training Epoch: 140/200	Train Loss: 0.0773	Val Accuracy: 1.78
+Training Epoch: 141/200	Train Loss: 0.0154	Val Accuracy: 1.78
+Training Epoch: 142/200	Train Loss: 0.0285	Val Accuracy: 1.88
+Training Epoch: 143/200	Train Loss: 0.0255	Val Accuracy: 1.88
+Training Epoch: 144/200	Train Loss: 0.028	Val Accuracy: 2.04
+Training Epoch: 145/200	Train Loss: 0.0585	Val Accuracy: 2.04
+Training Epoch: 146/200	Train Loss: 0.0239	Val Accuracy: 2.02
+Training Epoch: 147/200	Train Loss: 0.0805	Val Accuracy: 2.02
+Training Epoch: 148/200	Train Loss: 0.0206	Val Accuracy: 1.94
+Training Epoch: 149/200	Train Loss: 0.0826	Val Accuracy: 1.94
+Training Epoch: 150/200	Train Loss: 0.037	Val Accuracy: 1.78
+Training Epoch: 151/200	Train Loss: 0.0244	Val Accuracy: 1.78
+Training Epoch: 152/200	Train Loss: 0.0926	Val Accuracy: 1.88
+Training Epoch: 153/200	Train Loss: 0.0169	Val Accuracy: 1.88
+Training Epoch: 154/200	Train Loss: 0.0611	Val Accuracy: 1.84
+Training Epoch: 155/200	Train Loss: 0.0222	Val Accuracy: 1.84
+Training Epoch: 156/200	Train Loss: 0.0311	Val Accuracy: 1.7
+Training Epoch: 157/200	Train Loss: 0.0324	Val Accuracy: 1.7
+Training Epoch: 158/200	Train Loss: 0.0384	Val Accuracy: 1.78
+Training Epoch: 159/200	Train Loss: 0.0484	Val Accuracy: 1.78
+Training Epoch: 160/200	Train Loss: 0.0503	Val Accuracy: 2.06
+Training Epoch: 161/200	Train Loss: 0.0639	Val Accuracy: 2.06
+Training Epoch: 162/200	Train Loss: 0.0157	Val Accuracy: 2.04
+Training Epoch: 163/200	Train Loss: 0.0376	Val Accuracy: 2.04
+Training Epoch: 164/200	Train Loss: 0.0155	Val Accuracy: 1.98
+Training Epoch: 165/200	Train Loss: 0.1127	Val Accuracy: 1.98
+Training Epoch: 166/200	Train Loss: 0.0478	Val Accuracy: 1.7
+Training Epoch: 167/200	Train Loss: 0.056	Val Accuracy: 1.7
+Training Epoch: 168/200	Train Loss: 0.0787	Val Accuracy: 1.82
+Training Epoch: 169/200	Train Loss: 0.0165	Val Accuracy: 1.82
+Training Epoch: 170/200	Train Loss: 0.068	Val Accuracy: 1.88
+Training Epoch: 171/200	Train Loss: 0.0339	Val Accuracy: 1.88
+Training Epoch: 172/200	Train Loss: 0.0184	Val Accuracy: 1.6
+Training Epoch: 173/200	Train Loss: 0.0091	Val Accuracy: 1.6
+Training Epoch: 174/200	Train Loss: 0.1035	Val Accuracy: 1.66
+Training Epoch: 175/200	Train Loss: 0.0694	Val Accuracy: 1.66
+Training Epoch: 176/200	Train Loss: 0.0826	Val Accuracy: 1.92
+Training Epoch: 177/200	Train Loss: 0.0226	Val Accuracy: 1.92
+Training Epoch: 178/200	Train Loss: 0.0151	Val Accuracy: 1.94
+Training Epoch: 179/200	Train Loss: 0.0513	Val Accuracy: 1.94
+Training Epoch: 180/200	Train Loss: 0.0466	Val Accuracy: 2.02
+Training Epoch: 181/200	Train Loss: 0.0334	Val Accuracy: 2.02
+Training Epoch: 182/200	Train Loss: 0.0161	Val Accuracy: 2.18
+Training Epoch: 183/200	Train Loss: 0.0441	Val Accuracy: 2.18
+Training Epoch: 184/200	Train Loss: 0.0455	Val Accuracy: 2.16
+Training Epoch: 185/200	Train Loss: 0.0428	Val Accuracy: 2.16
+Training Epoch: 186/200	Train Loss: 0.0101	Val Accuracy: 2.06
+Training Epoch: 187/200	Train Loss: 0.0156	Val Accuracy: 2.06
+Training Epoch: 188/200	Train Loss: 0.1154	Val Accuracy: 2.08
+Training Epoch: 189/200	Train Loss: 0.0136	Val Accuracy: 2.08
+Training Epoch: 190/200	Train Loss: 0.0363	Val Accuracy: 1.88
+Training Epoch: 191/200	Train Loss: 0.0126	Val Accuracy: 1.88
+Training Epoch: 192/200	Train Loss: 0.0284	Val Accuracy: 1.76
+Training Epoch: 193/200	Train Loss: 0.0785	Val Accuracy: 1.76
+Training Epoch: 194/200	Train Loss: 0.0157	Val Accuracy: 1.62
+Training Epoch: 195/200	Train Loss: 0.0782	Val Accuracy: 1.62
+Training Epoch: 196/200	Train Loss: 0.021	Val Accuracy: 1.8
+Training Epoch: 197/200	Train Loss: 0.0533	Val Accuracy: 1.8
+Training Epoch: 198/200	Train Loss: 0.1147	Val Accuracy: 1.86
+Training Epoch: 199/200	Train Loss: 0.1884	Val Accuracy: 1.86
+Training Epoch: 200/200	Train Loss: 0.1086	Val Accuracy: 1.78
+
+Wrote Best Model Checkpoint to: vlBest_acc_2_model_epoch_0128.pyth
+
+Best Validation Accuracy: 2.26
+Best Epoch: 128
+
+======== TESTING ========
+
+Test Accuracy: 1.79.
+
+======== ACTIVE SAMPLING ========
+
+len usetLoader: 949
+Active Sampling Complete. After Episode 1:
+New Labeled Set: 150, New Unlabeled Set: 94850, Active Set: 50
+
+================================
+
+
+Current accuracy values:  [1.4399999999999977, 1.7900000000000063]
+======== EPISODE 2 BEGINS ========
+
+======== TRAINING ========
+Training Epoch: 1/200	Train Loss: 4.9545	Val Accuracy: 0.0
+Training Epoch: 2/200	Train Loss: 4.4934	Val Accuracy: 2.08
+Training Epoch: 3/200	Train Loss: 3.726	Val Accuracy: 2.08
+Training Epoch: 4/200	Train Loss: 2.6439	Val Accuracy: 1.9
+Training Epoch: 5/200	Train Loss: 2.2577	Val Accuracy: 1.9
+Training Epoch: 6/200	Train Loss: 1.9105	Val Accuracy: 0.88
+Training Epoch: 7/200	Train Loss: 1.9717	Val Accuracy: 0.88
+Training Epoch: 8/200	Train Loss: 2.1419	Val Accuracy: 1.06
+Training Epoch: 9/200	Train Loss: 2.0132	Val Accuracy: 1.06
+Training Epoch: 10/200	Train Loss: 1.8588	Val Accuracy: 0.88
+Training Epoch: 11/200	Train Loss: 1.4363	Val Accuracy: 0.88
+Training Epoch: 12/200	Train Loss: 1.6141	Val Accuracy: 1.08
+Training Epoch: 13/200	Train Loss: 1.4035	Val Accuracy: 1.08
+Training Epoch: 14/200	Train Loss: 1.2063	Val Accuracy: 1.46
+Training Epoch: 15/200	Train Loss: 2.3701	Val Accuracy: 1.46
+Training Epoch: 16/200	Train Loss: 1.2067	Val Accuracy: 1.5
+Training Epoch: 17/200	Train Loss: 1.2179	Val Accuracy: 1.5
+Training Epoch: 18/200	Train Loss: 1.0434	Val Accuracy: 1.5
+Training Epoch: 19/200	Train Loss: 1.0249	Val Accuracy: 1.5
+Training Epoch: 20/200	Train Loss: 0.9974	Val Accuracy: 1.56
+Training Epoch: 21/200	Train Loss: 1.1485	Val Accuracy: 1.56
+Training Epoch: 22/200	Train Loss: 0.8319	Val Accuracy: 1.58
+Training Epoch: 23/200	Train Loss: 0.9061	Val Accuracy: 1.58
+Training Epoch: 24/200	Train Loss: 0.6206	Val Accuracy: 1.82
+Training Epoch: 25/200	Train Loss: 0.7262	Val Accuracy: 1.82
+Training Epoch: 26/200	Train Loss: 0.5806	Val Accuracy: 2.36
+Training Epoch: 27/200	Train Loss: 0.6169	Val Accuracy: 2.36
+Training Epoch: 28/200	Train Loss: 0.6845	Val Accuracy: 2.18
+Training Epoch: 29/200	Train Loss: 0.605	Val Accuracy: 2.18
+Training Epoch: 30/200	Train Loss: 0.5115	Val Accuracy: 2.04
+Training Epoch: 31/200	Train Loss: 0.6817	Val Accuracy: 2.04
+Training Epoch: 32/200	Train Loss: 0.5099	Val Accuracy: 2.24
+Training Epoch: 33/200	Train Loss: 0.7256	Val Accuracy: 2.24
+Training Epoch: 34/200	Train Loss: 0.3672	Val Accuracy: 2.28
+Training Epoch: 35/200	Train Loss: 0.3396	Val Accuracy: 2.28
+Training Epoch: 36/200	Train Loss: 0.335	Val Accuracy: 2.34
+Training Epoch: 37/200	Train Loss: 0.2463	Val Accuracy: 2.34
+Training Epoch: 38/200	Train Loss: 0.4722	Val Accuracy: 2.2
+Training Epoch: 39/200	Train Loss: 0.2579	Val Accuracy: 2.2
+Training Epoch: 40/200	Train Loss: 0.341	Val Accuracy: 2.14
+Training Epoch: 41/200	Train Loss: 0.4278	Val Accuracy: 2.14
+Training Epoch: 42/200	Train Loss: 0.3671	Val Accuracy: 2.2
+Training Epoch: 43/200	Train Loss: 0.2472	Val Accuracy: 2.2
+Training Epoch: 44/200	Train Loss: 0.2599	Val Accuracy: 1.94
+Training Epoch: 45/200	Train Loss: 0.3474	Val Accuracy: 1.94
+Training Epoch: 46/200	Train Loss: 0.3054	Val Accuracy: 1.88
+Training Epoch: 47/200	Train Loss: 0.3486	Val Accuracy: 1.88
+Training Epoch: 48/200	Train Loss: 0.2136	Val Accuracy: 2.22
+Training Epoch: 49/200	Train Loss: 0.2132	Val Accuracy: 2.22
+Training Epoch: 50/200	Train Loss: 0.1375	Val Accuracy: 2.24
+Training Epoch: 51/200	Train Loss: 0.2023	Val Accuracy: 2.24
+Training Epoch: 52/200	Train Loss: 0.3711	Val Accuracy: 2.46
+Training Epoch: 53/200	Train Loss: 0.1807	Val Accuracy: 2.46
+Training Epoch: 54/200	Train Loss: 0.404	Val Accuracy: 2.28
+Training Epoch: 55/200	Train Loss: 0.1697	Val Accuracy: 2.28
+Training Epoch: 56/200	Train Loss: 0.1783	Val Accuracy: 1.9
+Training Epoch: 57/200	Train Loss: 0.127	Val Accuracy: 1.9
+Training Epoch: 58/200	Train Loss: 0.1808	Val Accuracy: 2.08
+Training Epoch: 59/200	Train Loss: 0.3265	Val Accuracy: 2.08
+Training Epoch: 60/200	Train Loss: 0.1475	Val Accuracy: 2.12
+Training Epoch: 61/200	Train Loss: 0.1041	Val Accuracy: 2.12
+Training Epoch: 62/200	Train Loss: 0.0691	Val Accuracy: 2.04
+Training Epoch: 63/200	Train Loss: 0.1226	Val Accuracy: 2.04
+Training Epoch: 64/200	Train Loss: 0.188	Val Accuracy: 2.08
+Training Epoch: 65/200	Train Loss: 0.2926	Val Accuracy: 2.08
+Training Epoch: 66/200	Train Loss: 0.1325	Val Accuracy: 2.04
+Training Epoch: 67/200	Train Loss: 0.1587	Val Accuracy: 2.04
+Training Epoch: 68/200	Train Loss: 0.1362	Val Accuracy: 2.0
+Training Epoch: 69/200	Train Loss: 0.2199	Val Accuracy: 2.0
+Training Epoch: 70/200	Train Loss: 0.2324	Val Accuracy: 1.76
+Training Epoch: 71/200	Train Loss: 0.1137	Val Accuracy: 1.76
+Training Epoch: 72/200	Train Loss: 0.1664	Val Accuracy: 1.82
+Training Epoch: 73/200	Train Loss: 0.222	Val Accuracy: 1.82
+Training Epoch: 74/200	Train Loss: 0.2052	Val Accuracy: 2.06
+Training Epoch: 75/200	Train Loss: 0.0992	Val Accuracy: 2.06
+Training Epoch: 76/200	Train Loss: 0.1058	Val Accuracy: 2.0
+Training Epoch: 77/200	Train Loss: 0.101	Val Accuracy: 2.0
+Training Epoch: 78/200	Train Loss: 0.1188	Val Accuracy: 2.26
+Training Epoch: 79/200	Train Loss: 0.1213	Val Accuracy: 2.26
+Training Epoch: 80/200	Train Loss: 0.1142	Val Accuracy: 2.34
+Training Epoch: 81/200	Train Loss: 0.0708	Val Accuracy: 2.34
+Training Epoch: 82/200	Train Loss: 0.0426	Val Accuracy: 2.3
+Training Epoch: 83/200	Train Loss: 0.0714	Val Accuracy: 2.3
+Training Epoch: 84/200	Train Loss: 0.0559	Val Accuracy: 2.1
+Training Epoch: 85/200	Train Loss: 0.0787	Val Accuracy: 2.1
+Training Epoch: 86/200	Train Loss: 0.0944	Val Accuracy: 2.26
+Training Epoch: 87/200	Train Loss: 0.1082	Val Accuracy: 2.26
+Training Epoch: 88/200	Train Loss: 0.1149	Val Accuracy: 2.2
+Training Epoch: 89/200	Train Loss: 0.062	Val Accuracy: 2.2
+Training Epoch: 90/200	Train Loss: 0.1166	Val Accuracy: 2.28
+Training Epoch: 91/200	Train Loss: 0.0842	Val Accuracy: 2.28
+Training Epoch: 92/200	Train Loss: 0.1038	Val Accuracy: 2.02
+Training Epoch: 93/200	Train Loss: 0.1064	Val Accuracy: 2.02
+Training Epoch: 94/200	Train Loss: 0.1903	Val Accuracy: 2.04
+Training Epoch: 95/200	Train Loss: 0.1197	Val Accuracy: 2.04
+Training Epoch: 96/200	Train Loss: 0.1049	Val Accuracy: 2.06
+Training Epoch: 97/200	Train Loss: 0.3044	Val Accuracy: 2.06
+Training Epoch: 98/200	Train Loss: 0.2979	Val Accuracy: 2.08
+Training Epoch: 99/200	Train Loss: 0.1626	Val Accuracy: 2.08
+Training Epoch: 100/200	Train Loss: 0.1154	Val Accuracy: 2.2
+Training Epoch: 101/200	Train Loss: 0.23	Val Accuracy: 2.2
+Training Epoch: 102/200	Train Loss: 0.1779	Val Accuracy: 2.54
+Training Epoch: 103/200	Train Loss: 0.1183	Val Accuracy: 2.54
+Training Epoch: 104/200	Train Loss: 0.1451	Val Accuracy: 2.22
+Training Epoch: 105/200	Train Loss: 0.1324	Val Accuracy: 2.22
+Training Epoch: 106/200	Train Loss: 0.1393	Val Accuracy: 2.18
+Training Epoch: 107/200	Train Loss: 0.072	Val Accuracy: 2.18
+Training Epoch: 108/200	Train Loss: 0.173	Val Accuracy: 1.92
+Training Epoch: 109/200	Train Loss: 0.202	Val Accuracy: 1.92
+Training Epoch: 110/200	Train Loss: 0.2462	Val Accuracy: 1.92
+Training Epoch: 111/200	Train Loss: 0.1263	Val Accuracy: 1.92
+Training Epoch: 112/200	Train Loss: 0.1285	Val Accuracy: 1.84
+Training Epoch: 113/200	Train Loss: 0.1212	Val Accuracy: 1.84
+Training Epoch: 114/200	Train Loss: 0.1088	Val Accuracy: 1.98
+Training Epoch: 115/200	Train Loss: 0.32	Val Accuracy: 1.98
+Training Epoch: 116/200	Train Loss: 0.0987	Val Accuracy: 2.26
+Training Epoch: 117/200	Train Loss: 0.1259	Val Accuracy: 2.26
+Training Epoch: 118/200	Train Loss: 0.1175	Val Accuracy: 2.26
+Training Epoch: 119/200	Train Loss: 0.1714	Val Accuracy: 2.26
+Training Epoch: 120/200	Train Loss: 0.0983	Val Accuracy: 2.34
+Training Epoch: 121/200	Train Loss: 0.0854	Val Accuracy: 2.34
+Training Epoch: 122/200	Train Loss: 0.1218	Val Accuracy: 2.38
+Training Epoch: 123/200	Train Loss: 0.1264	Val Accuracy: 2.38
+Training Epoch: 124/200	Train Loss: 0.0863	Val Accuracy: 2.38
+Training Epoch: 125/200	Train Loss: 0.1203	Val Accuracy: 2.38
+Training Epoch: 126/200	Train Loss: 0.1792	Val Accuracy: 2.16
+Training Epoch: 127/200	Train Loss: 0.1431	Val Accuracy: 2.16
+Training Epoch: 128/200	Train Loss: 0.1089	Val Accuracy: 2.26
+Training Epoch: 129/200	Train Loss: 0.0775	Val Accuracy: 2.26
+Training Epoch: 130/200	Train Loss: 0.1572	Val Accuracy: 2.08
+Training Epoch: 131/200	Train Loss: 0.1536	Val Accuracy: 2.08
+Training Epoch: 132/200	Train Loss: 0.2376	Val Accuracy: 2.22
+Training Epoch: 133/200	Train Loss: 0.1319	Val Accuracy: 2.22
+Training Epoch: 134/200	Train Loss: 0.0489	Val Accuracy: 2.28
+Training Epoch: 135/200	Train Loss: 0.4702	Val Accuracy: 2.28
+Training Epoch: 136/200	Train Loss: 0.0751	Val Accuracy: 2.26
+Training Epoch: 137/200	Train Loss: 0.1415	Val Accuracy: 2.26
+Training Epoch: 138/200	Train Loss: 0.1756	Val Accuracy: 2.14
+Training Epoch: 139/200	Train Loss: 0.2293	Val Accuracy: 2.14
+Training Epoch: 140/200	Train Loss: 0.266	Val Accuracy: 2.18
+Training Epoch: 141/200	Train Loss: 0.1315	Val Accuracy: 2.18
+Training Epoch: 142/200	Train Loss: 0.7095	Val Accuracy: 2.12
+Training Epoch: 143/200	Train Loss: 0.2275	Val Accuracy: 2.12
+Training Epoch: 144/200	Train Loss: 0.116	Val Accuracy: 2.08
+Training Epoch: 145/200	Train Loss: 0.269	Val Accuracy: 2.08
+Training Epoch: 146/200	Train Loss: 0.1983	Val Accuracy: 2.1
+Training Epoch: 147/200	Train Loss: 0.0607	Val Accuracy: 2.1
+Training Epoch: 148/200	Train Loss: 0.1391	Val Accuracy: 2.16
+Training Epoch: 149/200	Train Loss: 0.2662	Val Accuracy: 2.16
+Training Epoch: 150/200	Train Loss: 0.2008	Val Accuracy: 2.18
+Training Epoch: 151/200	Train Loss: 0.208	Val Accuracy: 2.18
+Training Epoch: 152/200	Train Loss: 0.1125	Val Accuracy: 2.16
+Training Epoch: 153/200	Train Loss: 0.1439	Val Accuracy: 2.16
+Training Epoch: 154/200	Train Loss: 0.1141	Val Accuracy: 2.22
+Training Epoch: 155/200	Train Loss: 0.1492	Val Accuracy: 2.22
+Training Epoch: 156/200	Train Loss: 0.1825	Val Accuracy: 2.24
+Training Epoch: 157/200	Train Loss: 0.0554	Val Accuracy: 2.24
+Training Epoch: 158/200	Train Loss: 0.047	Val Accuracy: 2.2
+Training Epoch: 159/200	Train Loss: 0.1084	Val Accuracy: 2.2
+Training Epoch: 160/200	Train Loss: 0.1654	Val Accuracy: 2.18
+Training Epoch: 161/200	Train Loss: 0.0859	Val Accuracy: 2.18
+Training Epoch: 162/200	Train Loss: 0.081	Val Accuracy: 2.18
+Training Epoch: 163/200	Train Loss: 0.063	Val Accuracy: 2.18
+Training Epoch: 164/200	Train Loss: 0.058	Val Accuracy: 2.38
+Training Epoch: 165/200	Train Loss: 0.1193	Val Accuracy: 2.38
+Training Epoch: 166/200	Train Loss: 0.0612	Val Accuracy: 2.14
+Training Epoch: 167/200	Train Loss: 0.0503	Val Accuracy: 2.14
+Training Epoch: 168/200	Train Loss: 0.0345	Val Accuracy: 1.88
+Training Epoch: 169/200	Train Loss: 0.1488	Val Accuracy: 1.88
+Training Epoch: 170/200	Train Loss: 0.0428	Val Accuracy: 2.1
+Training Epoch: 171/200	Train Loss: 0.0659	Val Accuracy: 2.1
+Training Epoch: 172/200	Train Loss: 0.0472	Val Accuracy: 2.08
+Training Epoch: 173/200	Train Loss: 0.0551	Val Accuracy: 2.08
+Training Epoch: 174/200	Train Loss: 0.0937	Val Accuracy: 2.1
+Training Epoch: 175/200	Train Loss: 0.1702	Val Accuracy: 2.1
+Training Epoch: 176/200	Train Loss: 0.1305	Val Accuracy: 2.12
+Training Epoch: 177/200	Train Loss: 0.0862	Val Accuracy: 2.12
+Training Epoch: 178/200	Train Loss: 0.0819	Val Accuracy: 2.14
+Training Epoch: 179/200	Train Loss: 0.1009	Val Accuracy: 2.14
+Training Epoch: 180/200	Train Loss: 0.2218	Val Accuracy: 2.5
+Training Epoch: 181/200	Train Loss: 0.0842	Val Accuracy: 2.5
+Training Epoch: 182/200	Train Loss: 0.1121	Val Accuracy: 2.22
+Training Epoch: 183/200	Train Loss: 0.0503	Val Accuracy: 2.22
+Training Epoch: 184/200	Train Loss: 0.1242	Val Accuracy: 2.18
+Training Epoch: 185/200	Train Loss: 0.0487	Val Accuracy: 2.18
+Training Epoch: 186/200	Train Loss: 0.0595	Val Accuracy: 1.94
+Training Epoch: 187/200	Train Loss: 0.0407	Val Accuracy: 1.94
+Training Epoch: 188/200	Train Loss: 0.0823	Val Accuracy: 1.82
+Training Epoch: 189/200	Train Loss: 0.0264	Val Accuracy: 1.82
+Training Epoch: 190/200	Train Loss: 0.0251	Val Accuracy: 1.96
+Training Epoch: 191/200	Train Loss: 0.0548	Val Accuracy: 1.96
+Training Epoch: 192/200	Train Loss: 0.0539	Val Accuracy: 1.92
+Training Epoch: 193/200	Train Loss: 0.0423	Val Accuracy: 1.92
+Training Epoch: 194/200	Train Loss: 0.0713	Val Accuracy: 1.94
+Training Epoch: 195/200	Train Loss: 0.0468	Val Accuracy: 1.94
+Training Epoch: 196/200	Train Loss: 0.0386	Val Accuracy: 2.18
+Training Epoch: 197/200	Train Loss: 0.0427	Val Accuracy: 2.18
+Training Epoch: 198/200	Train Loss: 0.06	Val Accuracy: 2.18
+Training Epoch: 199/200	Train Loss: 0.1227	Val Accuracy: 2.18
+Training Epoch: 200/200	Train Loss: 0.0335	Val Accuracy: 2.22
+
+Wrote Best Model Checkpoint to: vlBest_acc_2_model_epoch_0102.pyth
+
+Best Validation Accuracy: 2.54
+Best Epoch: 102
+
+======== TESTING ========
+
+Test Accuracy: 2.17.
+
+======== ACTIVE SAMPLING ========
+
+len usetLoader: 949
+Active Sampling Complete. After Episode 2:
+New Labeled Set: 200, New Unlabeled Set: 94800, Active Set: 50
+
+================================
+
+
+Current accuracy values:  [1.4399999999999977, 1.7900000000000063, 2.1700000000000017]
+======== EPISODE 3 BEGINS ========
+
+======== TRAINING ========
+Training Epoch: 1/200	Train Loss: 3.781	Val Accuracy: 0.0
+Training Epoch: 2/200	Train Loss: 2.3531	Val Accuracy: 1.58
+Training Epoch: 3/200	Train Loss: 1.9307	Val Accuracy: 1.58
+Training Epoch: 4/200	Train Loss: 1.799	Val Accuracy: 1.5
+Training Epoch: 5/200	Train Loss: 1.6724	Val Accuracy: 1.5
+Training Epoch: 6/200	Train Loss: 1.3119	Val Accuracy: 2.12
+Training Epoch: 7/200	Train Loss: 1.1937	Val Accuracy: 2.12
+Training Epoch: 8/200	Train Loss: 1.189	Val Accuracy: 2.36
+Training Epoch: 9/200	Train Loss: 0.9667	Val Accuracy: 2.36
+Training Epoch: 10/200	Train Loss: 1.0107	Val Accuracy: 2.48
+Training Epoch: 11/200	Train Loss: 0.7875	Val Accuracy: 2.48
+Training Epoch: 12/200	Train Loss: 0.6708	Val Accuracy: 2.22
+Training Epoch: 13/200	Train Loss: 1.5799	Val Accuracy: 2.22
+Training Epoch: 14/200	Train Loss: 0.7652	Val Accuracy: 2.08
+Training Epoch: 15/200	Train Loss: 0.6917	Val Accuracy: 2.08
+Training Epoch: 16/200	Train Loss: 0.6659	Val Accuracy: 2.24
+Training Epoch: 17/200	Train Loss: 0.5308	Val Accuracy: 2.24
+Training Epoch: 18/200	Train Loss: 0.6396	Val Accuracy: 2.46
+Training Epoch: 19/200	Train Loss: 0.4362	Val Accuracy: 2.46
+Training Epoch: 20/200	Train Loss: 0.7092	Val Accuracy: 2.46
+Training Epoch: 21/200	Train Loss: 0.415	Val Accuracy: 2.46
+Training Epoch: 22/200	Train Loss: 0.3442	Val Accuracy: 2.16
+Training Epoch: 23/200	Train Loss: 0.5805	Val Accuracy: 2.16
+Training Epoch: 24/200	Train Loss: 0.4229	Val Accuracy: 2.24
+Training Epoch: 25/200	Train Loss: 0.5542	Val Accuracy: 2.24
+Training Epoch: 26/200	Train Loss: 0.4901	Val Accuracy: 2.5
+Training Epoch: 27/200	Train Loss: 0.5464	Val Accuracy: 2.5
+Training Epoch: 28/200	Train Loss: 0.305	Val Accuracy: 2.08
+Training Epoch: 29/200	Train Loss: 0.3079	Val Accuracy: 2.08
+Training Epoch: 30/200	Train Loss: 0.3954	Val Accuracy: 1.98
+Training Epoch: 31/200	Train Loss: 0.3524	Val Accuracy: 1.98
+Training Epoch: 32/200	Train Loss: 0.346	Val Accuracy: 1.94
+Training Epoch: 33/200	Train Loss: 0.5091	Val Accuracy: 1.94
+Training Epoch: 34/200	Train Loss: 0.2156	Val Accuracy: 1.9
+Training Epoch: 35/200	Train Loss: 0.5883	Val Accuracy: 1.9
+Training Epoch: 36/200	Train Loss: 1.3094	Val Accuracy: 2.08
+Training Epoch: 37/200	Train Loss: 0.3217	Val Accuracy: 2.08
+Training Epoch: 38/200	Train Loss: 0.4243	Val Accuracy: 2.08
+Training Epoch: 39/200	Train Loss: 0.3627	Val Accuracy: 2.08
+Training Epoch: 40/200	Train Loss: 0.4706	Val Accuracy: 1.88
+Training Epoch: 41/200	Train Loss: 0.7371	Val Accuracy: 1.88
+Training Epoch: 42/200	Train Loss: 0.5369	Val Accuracy: 1.92
+Training Epoch: 43/200	Train Loss: 0.5018	Val Accuracy: 1.92
+Training Epoch: 44/200	Train Loss: 0.3137	Val Accuracy: 2.26
+Training Epoch: 45/200	Train Loss: 0.2778	Val Accuracy: 2.26
+Training Epoch: 46/200	Train Loss: 0.3962	Val Accuracy: 2.2
+Training Epoch: 47/200	Train Loss: 0.3139	Val Accuracy: 2.2
+Training Epoch: 48/200	Train Loss: 0.303	Val Accuracy: 2.36
+Training Epoch: 49/200	Train Loss: 0.2175	Val Accuracy: 2.36
+Training Epoch: 50/200	Train Loss: 0.2309	Val Accuracy: 2.18
+Training Epoch: 51/200	Train Loss: 0.326	Val Accuracy: 2.18
+Training Epoch: 52/200	Train Loss: 0.1669	Val Accuracy: 2.1
+Training Epoch: 53/200	Train Loss: 0.2846	Val Accuracy: 2.1
+Training Epoch: 54/200	Train Loss: 0.2321	Val Accuracy: 2.6
+Training Epoch: 55/200	Train Loss: 0.3558	Val Accuracy: 2.6
+Training Epoch: 56/200	Train Loss: 0.1615	Val Accuracy: 2.22
+Training Epoch: 57/200	Train Loss: 0.3199	Val Accuracy: 2.22
+Training Epoch: 58/200	Train Loss: 0.1539	Val Accuracy: 2.4
+Training Epoch: 59/200	Train Loss: 0.2125	Val Accuracy: 2.4
+Training Epoch: 60/200	Train Loss: 0.1562	Val Accuracy: 2.2
+Training Epoch: 61/200	Train Loss: 0.3961	Val Accuracy: 2.2
+Training Epoch: 62/200	Train Loss: 0.1663	Val Accuracy: 2.44
+Training Epoch: 63/200	Train Loss: 0.1704	Val Accuracy: 2.44
+Training Epoch: 64/200	Train Loss: 0.4284	Val Accuracy: 2.04
+Training Epoch: 65/200	Train Loss: 0.1654	Val Accuracy: 2.04
+Training Epoch: 66/200	Train Loss: 0.1598	Val Accuracy: 2.12
+Training Epoch: 67/200	Train Loss: 0.0732	Val Accuracy: 2.12
+Training Epoch: 68/200	Train Loss: 0.1421	Val Accuracy: 2.0
+Training Epoch: 69/200	Train Loss: 0.121	Val Accuracy: 2.0
+Training Epoch: 70/200	Train Loss: 0.1356	Val Accuracy: 2.06
+Training Epoch: 71/200	Train Loss: 0.2503	Val Accuracy: 2.06
+Training Epoch: 72/200	Train Loss: 0.1149	Val Accuracy: 2.18
+Training Epoch: 73/200	Train Loss: 0.1753	Val Accuracy: 2.18
+Training Epoch: 74/200	Train Loss: 0.1806	Val Accuracy: 2.52
+Training Epoch: 75/200	Train Loss: 0.2964	Val Accuracy: 2.52
+Training Epoch: 76/200	Train Loss: 0.1709	Val Accuracy: 2.42
+Training Epoch: 77/200	Train Loss: 0.1299	Val Accuracy: 2.42
+Training Epoch: 78/200	Train Loss: 0.3067	Val Accuracy: 2.3
+Training Epoch: 79/200	Train Loss: 0.1316	Val Accuracy: 2.3
+Training Epoch: 80/200	Train Loss: 0.2491	Val Accuracy: 2.1
+Training Epoch: 81/200	Train Loss: 0.1536	Val Accuracy: 2.1
+Training Epoch: 82/200	Train Loss: 0.1358	Val Accuracy: 2.42
+Training Epoch: 83/200	Train Loss: 0.1058	Val Accuracy: 2.42
+Training Epoch: 84/200	Train Loss: 0.2587	Val Accuracy: 2.06
+Training Epoch: 85/200	Train Loss: 0.3508	Val Accuracy: 2.06
+Training Epoch: 86/200	Train Loss: 0.1259	Val Accuracy: 2.08
+Training Epoch: 87/200	Train Loss: 0.2152	Val Accuracy: 2.08
+Training Epoch: 88/200	Train Loss: 0.1991	Val Accuracy: 2.04
+Training Epoch: 89/200	Train Loss: 0.2073	Val Accuracy: 2.04
+Training Epoch: 90/200	Train Loss: 0.1237	Val Accuracy: 2.26
+Training Epoch: 91/200	Train Loss: 0.1762	Val Accuracy: 2.26
+Training Epoch: 92/200	Train Loss: 0.1011	Val Accuracy: 2.12
+Training Epoch: 93/200	Train Loss: 0.0735	Val Accuracy: 2.12
+Training Epoch: 94/200	Train Loss: 0.1264	Val Accuracy: 2.28
+Training Epoch: 95/200	Train Loss: 0.1993	Val Accuracy: 2.28
+Training Epoch: 96/200	Train Loss: 0.0722	Val Accuracy: 2.34
+Training Epoch: 97/200	Train Loss: 0.1045	Val Accuracy: 2.34
+Training Epoch: 98/200	Train Loss: 0.0803	Val Accuracy: 2.24
+Training Epoch: 99/200	Train Loss: 0.0692	Val Accuracy: 2.24
+Training Epoch: 100/200	Train Loss: 0.1499	Val Accuracy: 2.36
+Training Epoch: 101/200	Train Loss: 0.0526	Val Accuracy: 2.36
+Training Epoch: 102/200	Train Loss: 0.0527	Val Accuracy: 2.3
+Training Epoch: 103/200	Train Loss: 0.1654	Val Accuracy: 2.3
+Training Epoch: 104/200	Train Loss: 0.0679	Val Accuracy: 2.22
+Training Epoch: 105/200	Train Loss: 0.1532	Val Accuracy: 2.22
+Training Epoch: 106/200	Train Loss: 0.071	Val Accuracy: 2.3
+Training Epoch: 107/200	Train Loss: 0.0494	Val Accuracy: 2.3
+Training Epoch: 108/200	Train Loss: 0.0804	Val Accuracy: 2.3
+Training Epoch: 109/200	Train Loss: 0.0738	Val Accuracy: 2.3
+Training Epoch: 110/200	Train Loss: 0.0527	Val Accuracy: 2.26
+Training Epoch: 111/200	Train Loss: 0.1132	Val Accuracy: 2.26
+Training Epoch: 112/200	Train Loss: 0.132	Val Accuracy: 2.38
+Training Epoch: 113/200	Train Loss: 0.0923	Val Accuracy: 2.38
+Training Epoch: 114/200	Train Loss: 0.0589	Val Accuracy: 2.2
+Training Epoch: 115/200	Train Loss: 0.1439	Val Accuracy: 2.2
+Training Epoch: 116/200	Train Loss: 0.0632	Val Accuracy: 2.42
+Training Epoch: 117/200	Train Loss: 0.0774	Val Accuracy: 2.42
+Training Epoch: 118/200	Train Loss: 0.0462	Val Accuracy: 2.32
+Training Epoch: 119/200	Train Loss: 0.0441	Val Accuracy: 2.32
+Training Epoch: 120/200	Train Loss: 0.0529	Val Accuracy: 2.26
+Training Epoch: 121/200	Train Loss: 0.0489	Val Accuracy: 2.26
+Training Epoch: 122/200	Train Loss: 0.0306	Val Accuracy: 2.52
+Training Epoch: 123/200	Train Loss: 0.0534	Val Accuracy: 2.52
+Training Epoch: 124/200	Train Loss: 0.014	Val Accuracy: 2.36
+Training Epoch: 125/200	Train Loss: 0.0308	Val Accuracy: 2.36
+Training Epoch: 126/200	Train Loss: 0.0376	Val Accuracy: 2.28
+Training Epoch: 127/200	Train Loss: 0.0739	Val Accuracy: 2.28
+Training Epoch: 128/200	Train Loss: 0.1144	Val Accuracy: 2.46
+Training Epoch: 129/200	Train Loss: 0.043	Val Accuracy: 2.46
+Training Epoch: 130/200	Train Loss: 0.0246	Val Accuracy: 2.4
+Training Epoch: 131/200	Train Loss: 0.082	Val Accuracy: 2.4
+Training Epoch: 132/200	Train Loss: 0.06	Val Accuracy: 2.14
+Training Epoch: 133/200	Train Loss: 0.082	Val Accuracy: 2.14
+Training Epoch: 134/200	Train Loss: 0.0848	Val Accuracy: 2.12
+Training Epoch: 135/200	Train Loss: 0.071	Val Accuracy: 2.12
+Training Epoch: 136/200	Train Loss: 0.0714	Val Accuracy: 2.14
+Training Epoch: 137/200	Train Loss: 0.084	Val Accuracy: 2.14
+Training Epoch: 138/200	Train Loss: 0.0841	Val Accuracy: 2.02
+Training Epoch: 139/200	Train Loss: 0.0597	Val Accuracy: 2.02
+Training Epoch: 140/200	Train Loss: 0.0905	Val Accuracy: 2.28
+Training Epoch: 141/200	Train Loss: 0.1664	Val Accuracy: 2.28
+Training Epoch: 142/200	Train Loss: 0.0952	Val Accuracy: 2.28
+Training Epoch: 143/200	Train Loss: 0.237	Val Accuracy: 2.28
+Training Epoch: 144/200	Train Loss: 0.1103	Val Accuracy: 1.96
+Training Epoch: 145/200	Train Loss: 0.052	Val Accuracy: 1.96
+Training Epoch: 146/200	Train Loss: 0.0703	Val Accuracy: 2.02
+Training Epoch: 147/200	Train Loss: 0.2236	Val Accuracy: 2.02
+Training Epoch: 148/200	Train Loss: 0.2588	Val Accuracy: 2.46
+Training Epoch: 149/200	Train Loss: 0.0394	Val Accuracy: 2.46
+Training Epoch: 150/200	Train Loss: 0.1508	Val Accuracy: 2.66
+Training Epoch: 151/200	Train Loss: 0.2365	Val Accuracy: 2.66
+Training Epoch: 152/200	Train Loss: 0.0298	Val Accuracy: 2.62
+Training Epoch: 153/200	Train Loss: 0.0818	Val Accuracy: 2.62
+Training Epoch: 154/200	Train Loss: 0.1172	Val Accuracy: 2.58
+Training Epoch: 155/200	Train Loss: 0.1012	Val Accuracy: 2.58
+Training Epoch: 156/200	Train Loss: 0.1334	Val Accuracy: 2.4
+Training Epoch: 157/200	Train Loss: 0.117	Val Accuracy: 2.4
+Training Epoch: 158/200	Train Loss: 0.148	Val Accuracy: 2.48
+Training Epoch: 159/200	Train Loss: 0.2089	Val Accuracy: 2.48
+Training Epoch: 160/200	Train Loss: 0.0457	Val Accuracy: 2.2
+Training Epoch: 161/200	Train Loss: 0.1454	Val Accuracy: 2.2
+Training Epoch: 162/200	Train Loss: 0.1438	Val Accuracy: 2.04
+Training Epoch: 163/200	Train Loss: 0.1179	Val Accuracy: 2.04
+Training Epoch: 164/200	Train Loss: 0.0571	Val Accuracy: 1.74
+Training Epoch: 165/200	Train Loss: 0.1195	Val Accuracy: 1.74
+Training Epoch: 166/200	Train Loss: 0.172	Val Accuracy: 2.24
+Training Epoch: 167/200	Train Loss: 0.0525	Val Accuracy: 2.24
+Training Epoch: 168/200	Train Loss: 0.226	Val Accuracy: 2.42
+Training Epoch: 169/200	Train Loss: 0.0928	Val Accuracy: 2.42
+Training Epoch: 170/200	Train Loss: 0.0445	Val Accuracy: 2.28
+Training Epoch: 171/200	Train Loss: 0.1231	Val Accuracy: 2.28
+Training Epoch: 172/200	Train Loss: 0.1283	Val Accuracy: 2.12
+Training Epoch: 173/200	Train Loss: 0.096	Val Accuracy: 2.12
+Training Epoch: 174/200	Train Loss: 0.0325	Val Accuracy: 2.08
+Training Epoch: 175/200	Train Loss: 0.0858	Val Accuracy: 2.08
+Training Epoch: 176/200	Train Loss: 0.0875	Val Accuracy: 2.28
+Training Epoch: 177/200	Train Loss: 0.1163	Val Accuracy: 2.28
+Training Epoch: 178/200	Train Loss: 0.0812	Val Accuracy: 2.4
+Training Epoch: 179/200	Train Loss: 0.0478	Val Accuracy: 2.4
+Training Epoch: 180/200	Train Loss: 0.0592	Val Accuracy: 2.38
+Training Epoch: 181/200	Train Loss: 0.0488	Val Accuracy: 2.38
+Training Epoch: 182/200	Train Loss: 0.0781	Val Accuracy: 2.24
+Training Epoch: 183/200	Train Loss: 0.066	Val Accuracy: 2.24
+Training Epoch: 184/200	Train Loss: 0.1741	Val Accuracy: 2.18
+Training Epoch: 185/200	Train Loss: 0.2215	Val Accuracy: 2.18
+Training Epoch: 186/200	Train Loss: 0.0735	Val Accuracy: 2.36
+Training Epoch: 187/200	Train Loss: 0.1354	Val Accuracy: 2.36
+Training Epoch: 188/200	Train Loss: 0.1459	Val Accuracy: 2.24
+Training Epoch: 189/200	Train Loss: 0.126	Val Accuracy: 2.24
+Training Epoch: 190/200	Train Loss: 0.1289	Val Accuracy: 2.4
+Training Epoch: 191/200	Train Loss: 0.0724	Val Accuracy: 2.4
+Training Epoch: 192/200	Train Loss: 0.0989	Val Accuracy: 2.42
+Training Epoch: 193/200	Train Loss: 0.1129	Val Accuracy: 2.42
+Training Epoch: 194/200	Train Loss: 0.0411	Val Accuracy: 2.56
+Training Epoch: 195/200	Train Loss: 0.0868	Val Accuracy: 2.56
+Training Epoch: 196/200	Train Loss: 0.0896	Val Accuracy: 2.62
+Training Epoch: 197/200	Train Loss: 0.0592	Val Accuracy: 2.62
+Training Epoch: 198/200	Train Loss: 0.0313	Val Accuracy: 2.34
+Training Epoch: 199/200	Train Loss: 0.0954	Val Accuracy: 2.34
+Training Epoch: 200/200	Train Loss: 0.0807	Val Accuracy: 2.38
+
+Wrote Best Model Checkpoint to: vlBest_acc_2_model_epoch_0150.pyth
+
+Best Validation Accuracy: 2.66
+Best Epoch: 150
+
+======== TESTING ========
+
+Test Accuracy: 2.39.
+
+======== ACTIVE SAMPLING ========
+
+len usetLoader: 948

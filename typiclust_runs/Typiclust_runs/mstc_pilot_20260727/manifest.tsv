@@ -1,0 +1,4 @@
+sbatch	dataset	backbone	delta_coarse	delta_fine	alpha
+cifar10_mstc_resnet18_c070_f050_50b.sbatch	CIFAR10	resnet18	0.7	0.5	0.7
+cifar100_mstc_resnet18_c070_f050_50b.sbatch	CIFAR100	resnet18	0.7	0.5	0.7
+tinyimagenet_mstc_resnet18_c070_f050_50b.sbatch	TINYIMAGENET	resnet18	0.7	0.5	0.7

@@ -1,0 +1,4 @@
+3451133 cifar10_mstc_resnet18_c070_f050_50b.sbatch
+3451134 cifar100_mstc_resnet18_c070_f050_50b.sbatch
+3451137 tinyimagenet_mstc_resnet18_c070_f050_50b.sbatch
+3451141 tinyimagenet_mstc_resnet18_c070_f050_50b.sbatch (resubmit, exclude v100-f-07)

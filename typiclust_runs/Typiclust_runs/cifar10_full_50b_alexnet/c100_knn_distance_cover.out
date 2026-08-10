@@ -1,0 +1,123 @@
+GPU 0: Tesla V100-SXM2-32GB (UUID: GPU-83f5c531-5128-a89f-68db-dcad326d736f)
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Tue May 26 22:18:12 2026
+Driver Version                            : 565.57.01
+CUDA Version                              : 12.7
+
+Attached GPUs                             : 1
+GPU 00000000:3B:00.0
+    ECC Mode
+        Current                           : Enabled
+        Pending                           : Enabled
+    ECC Errors
+        Volatile
+            Single Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 0
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+        Aggregate
+            Single Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 0
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+
+Experiment Directory Already Exists: /vast/s219110279/TypiClust/output/CIFAR10/resnet50/knn_distance_cover_1_50b. Reusing it may lead to loss of old logs in the directory.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomCrop(size=(32, 32), padding=4), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])]
+Files already downloaded and verified
+Files already downloaded and verified
+
+Dataset CIFAR10 Loaded Sucessfully.
+Total Train Size: 50000 and Total Test Size: 10000
+
+Labeled Set is Empty - Sampling an Initial Pool
+ProbCover adaptive delta: base=0.2500, effective=0.3375, scale=1.35, phase=cold_start, labeled_count=0
+Experiment Directory is /vast/s219110279/TypiClust/output/CIFAR10/resnet50/knn_distance_cover_2_50b.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomCrop(size=(32, 32), padding=4), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])]
+Files already downloaded and verified
+Files already downloaded and verified
+
+Dataset CIFAR10 Loaded Sucessfully.
+Total Train Size: 50000 and Total Test Size: 10000
+
+Labeled Set is Empty - Sampling an Initial Pool
+ProbCover adaptive delta: base=0.2500, effective=0.3375, scale=1.35, phase=cold_start, labeled_count=0
+Experiment Directory is /vast/s219110279/TypiClust/output/CIFAR10/resnet50/knn_distance_cover_3_50b.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomCrop(size=(32, 32), padding=4), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])]
+Files already downloaded and verified
+Files already downloaded and verified
+
+Dataset CIFAR10 Loaded Sucessfully.
+Total Train Size: 50000 and Total Test Size: 10000
+
+Labeled Set is Empty - Sampling an Initial Pool
+ProbCover adaptive delta: base=0.2500, effective=0.3375, scale=1.35, phase=cold_start, labeled_count=0
+Experiment Directory is /vast/s219110279/TypiClust/output/CIFAR10/resnet50/knn_distance_cover_4_50b.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomCrop(size=(32, 32), padding=4), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])]
+Files already downloaded and verified
+Files already downloaded and verified
+
+Dataset CIFAR10 Loaded Sucessfully.
+Total Train Size: 50000 and Total Test Size: 10000
+
+Labeled Set is Empty - Sampling an Initial Pool
+ProbCover adaptive delta: base=0.2500, effective=0.3375, scale=1.35, phase=cold_start, labeled_count=0
+Experiment Directory is /vast/s219110279/TypiClust/output/CIFAR10/resnet50/knn_distance_cover_5_50b.
+
+
+======== PREPARING DATA AND MODEL ========
+
+Preprocess Operations Selected ==>  [RandomCrop(size=(32, 32), padding=4), RandomHorizontalFlip(p=0.5), ToTensor(), Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.2435, 0.2616])]
+Files already downloaded and verified
+Files already downloaded and verified
+
+Dataset CIFAR10 Loaded Sucessfully.
+Total Train Size: 50000 and Total Test Size: 10000
+
+Labeled Set is Empty - Sampling an Initial Pool
+ProbCover adaptive delta: base=0.2500, effective=0.3375, scale=1.35, phase=cold_start, labeled_count=0

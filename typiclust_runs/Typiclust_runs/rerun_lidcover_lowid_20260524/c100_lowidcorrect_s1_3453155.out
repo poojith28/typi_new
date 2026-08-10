@@ -1,0 +1,34 @@
+GPU 0: NVIDIA L40S (UUID: GPU-ed5b5ad2-18f2-b51b-9934-404a114b7509)
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Wed Jul 29 01:19:49 2026
+Driver Version                            : 565.57.01
+CUDA Version                              : 12.7
+
+Attached GPUs                             : 1
+GPU 00000000:61:00.0
+    ECC Mode
+        Current                           : Enabled
+        Pending                           : Enabled
+    ECC Errors
+        Volatile
+            SRAM Correctable              : 0
+            SRAM Uncorrectable Parity     : 0
+            SRAM Uncorrectable SEC-DED    : 0
+            DRAM Correctable              : 0
+            DRAM Uncorrectable            : 0
+        Aggregate
+            SRAM Correctable              : 0
+            SRAM Uncorrectable Parity     : 0
+            SRAM Uncorrectable SEC-DED    : 0
+            DRAM Correctable              : 0
+            DRAM Uncorrectable            : 0
+            SRAM Threshold Exceeded       : No
+        Aggregate Uncorrectable SRAM Sources
+            SRAM L2                       : 0
+            SRAM SM                       : 0
+            SRAM Microcontroller          : 0
+            SRAM PCIE                     : 0
+            SRAM Other                    : 0
+

@@ -1,0 +1,9 @@
+
+EnvironmentNameNotFound: Could not find conda environment: AutoAL
+You can list all discoverable environments with `conda info --envs`.
+
+
+Traceback (most recent call last):
+  File "/vast/s219110279/TypiClust/deep-al/tools/train_al.py", line 9, in <module>
+    import torch
+ModuleNotFoundError: No module named 'torch'

@@ -1,0 +1,53 @@
+GPU 0: Tesla V100-SXM2-32GB (UUID: GPU-382167be-52f4-334e-1534-9d0d22716f94)
+
+==============NVSMI LOG==============
+
+Timestamp                                 : Wed Jul 29 01:19:19 2026
+Driver Version                            : 565.57.01
+CUDA Version                              : 12.7
+
+Attached GPUs                             : 1
+GPU 00000000:3B:00.0
+    ECC Mode
+        Current                           : Enabled
+        Pending                           : Enabled
+    ECC Errors
+        Volatile
+            Single Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 0
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+        Aggregate
+            Single Bit            
+                Device Memory             : 7
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : N/A
+                Total                     : 7
+            Double Bit            
+                Device Memory             : 0
+                Register File             : 0
+                L1 Cache                  : 0
+                L2 Cache                  : 0
+                Texture Memory            : N/A
+                Texture Shared            : N/A
+                CBU                       : 0
+                Total                     : 0
+

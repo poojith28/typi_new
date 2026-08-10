@@ -1,0 +1,80 @@
+Traceback (most recent call last):
+  File "train_al.py", line 977, in <module>
+    main(cfg)
+  File "train_al.py", line 327, in main
+    activeSet, new_uSet = al_obj.sample_from_uSet(model, lSet, uSet, train_data)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/ActiveLearning.py", line 396, in sample_from_uSet
+    add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'ARC_ADD_SELF_COVER', True)),
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/distance_cv_cover.py", line 18, in __init__
+    **kwargs,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/base.py", line 85, in __init__
+    faiss_gpu=self.faiss_gpu,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/common.py", line 67, in compute_or_load_knn
+    cached = np.load(knn_cache_path)
+  File "/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/numpy/lib/npyio.py", line 433, in load
+    pickle_kwargs=pickle_kwargs)
+  File "/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/numpy/lib/npyio.py", line 189, in __init__
+    _zip = zipfile_factory(fid)
+  File "/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/numpy/lib/npyio.py", line 112, in zipfile_factory
+    return zipfile.ZipFile(file, *args, **kwargs)
+  File "/home/s219110279/.conda/envs/typiclust/lib/python3.7/zipfile.py", line 1258, in __init__
+    self._RealGetContents()
+  File "/home/s219110279/.conda/envs/typiclust/lib/python3.7/zipfile.py", line 1325, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+Traceback (most recent call last):
+  File "train_al.py", line 977, in <module>
+    main(cfg)
+  File "train_al.py", line 327, in main
+    activeSet, new_uSet = al_obj.sample_from_uSet(model, lSet, uSet, train_data)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/ActiveLearning.py", line 396, in sample_from_uSet
+    add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'ARC_ADD_SELF_COVER', True)),
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/distance_cv_cover.py", line 18, in __init__
+    **kwargs,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/base.py", line 68, in __init__
+    self.all_features = ds_utils.load_features(self.ds_name, self.seed).astype(np.float32)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/datasets/utils/features.py", line 107, in load_features
+    ' Tried: {}'.format(ds_name, split, seed, backbone, candidate_paths)
+FileNotFoundError: Could not find pretrained features for dataset=CIFAR10 split=train seed=2 backbone=resnet50. Tried: ['/vast/s219110279/results/results/resnet50/cifar-10/pretext/features_seed2.npy', '/vast/s219110279/TypiClust/deep-al/pycls/scan/results/cifar-10/pretext/features_seed2.npy', '/vast/s219110279/scan/results/cifar-10/pretext/features_seed2.npy', '/vast/s219110279/TypiClust/scan/results/cifar-10/pretext/features_seed2.npy']
+Traceback (most recent call last):
+  File "train_al.py", line 977, in <module>
+    main(cfg)
+  File "train_al.py", line 327, in main
+    activeSet, new_uSet = al_obj.sample_from_uSet(model, lSet, uSet, train_data)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/ActiveLearning.py", line 396, in sample_from_uSet
+    add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'ARC_ADD_SELF_COVER', True)),
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/distance_cv_cover.py", line 18, in __init__
+    **kwargs,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/base.py", line 68, in __init__
+    self.all_features = ds_utils.load_features(self.ds_name, self.seed).astype(np.float32)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/datasets/utils/features.py", line 107, in load_features
+    ' Tried: {}'.format(ds_name, split, seed, backbone, candidate_paths)
+FileNotFoundError: Could not find pretrained features for dataset=CIFAR10 split=train seed=3 backbone=resnet50. Tried: ['/vast/s219110279/results/results/resnet50/cifar-10/pretext/features_seed3.npy', '/vast/s219110279/TypiClust/deep-al/pycls/scan/results/cifar-10/pretext/features_seed3.npy', '/vast/s219110279/scan/results/cifar-10/pretext/features_seed3.npy', '/vast/s219110279/TypiClust/scan/results/cifar-10/pretext/features_seed3.npy']
+Traceback (most recent call last):
+  File "train_al.py", line 977, in <module>
+    main(cfg)
+  File "train_al.py", line 327, in main
+    activeSet, new_uSet = al_obj.sample_from_uSet(model, lSet, uSet, train_data)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/ActiveLearning.py", line 396, in sample_from_uSet
+    add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'ARC_ADD_SELF_COVER', True)),
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/distance_cv_cover.py", line 18, in __init__
+    **kwargs,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/base.py", line 68, in __init__
+    self.all_features = ds_utils.load_features(self.ds_name, self.seed).astype(np.float32)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/datasets/utils/features.py", line 107, in load_features
+    ' Tried: {}'.format(ds_name, split, seed, backbone, candidate_paths)
+FileNotFoundError: Could not find pretrained features for dataset=CIFAR10 split=train seed=4 backbone=resnet50. Tried: ['/vast/s219110279/results/results/resnet50/cifar-10/pretext/features_seed4.npy', '/vast/s219110279/TypiClust/deep-al/pycls/scan/results/cifar-10/pretext/features_seed4.npy', '/vast/s219110279/scan/results/cifar-10/pretext/features_seed4.npy', '/vast/s219110279/TypiClust/scan/results/cifar-10/pretext/features_seed4.npy']
+Traceback (most recent call last):
+  File "train_al.py", line 977, in <module>
+    main(cfg)
+  File "train_al.py", line 327, in main
+    activeSet, new_uSet = al_obj.sample_from_uSet(model, lSet, uSet, train_data)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/ActiveLearning.py", line 396, in sample_from_uSet
+    add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'ARC_ADD_SELF_COVER', True)),
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/distance_cv_cover.py", line 18, in __init__
+    **kwargs,
+  File "/vast/s219110279/TypiClust/deep-al/pycls/al/adaptive_cover/base.py", line 68, in __init__
+    self.all_features = ds_utils.load_features(self.ds_name, self.seed).astype(np.float32)
+  File "/vast/s219110279/TypiClust/deep-al/pycls/datasets/utils/features.py", line 107, in load_features
+    ' Tried: {}'.format(ds_name, split, seed, backbone, candidate_paths)
+FileNotFoundError: Could not find pretrained features for dataset=CIFAR10 split=train seed=5 backbone=resnet50. Tried: ['/vast/s219110279/results/results/resnet50/cifar-10/pretext/features_seed5.npy', '/vast/s219110279/TypiClust/deep-al/pycls/scan/results/cifar-10/pretext/features_seed5.npy', '/vast/s219110279/scan/results/cifar-10/pretext/features_seed5.npy', '/vast/s219110279/TypiClust/scan/results/cifar-10/pretext/features_seed5.npy']

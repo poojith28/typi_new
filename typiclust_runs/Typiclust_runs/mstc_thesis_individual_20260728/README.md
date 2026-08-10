@@ -1,0 +1,1 @@
+# MultiScaleTopoCover thesis individual jobs\n\nOne Slurm file per dataset/backbone/seed/ablation run.\nMain: dc=0.70, df=0.50, alpha=0.7.\nScale: dc in {0.60,0.80}, df=dc-0.20.\nBudget: cifar100/resnet18, B in {100,500}.\n

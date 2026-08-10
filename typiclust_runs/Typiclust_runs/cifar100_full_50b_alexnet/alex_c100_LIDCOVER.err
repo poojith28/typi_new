@@ -1,0 +1,22 @@
+/usr/bin/lua: /usr/share/lmod/lmod/libexec/MT.lua:1420: attempt to compare string with nil
+stack traceback:
+	/usr/share/lmod/lmod/libexec/MT.lua:1420: in function </usr/share/lmod/lmod/libexec/MT.lua:1418>
+	[C]: in function 'sort'
+	/usr/share/lmod/lmod/libexec/MT.lua:1418: in function 'list'
+	/usr/share/lmod/lmod/libexec/Master.lua:616: in function 'unload'
+	/usr/share/lmod/lmod/libexec/MasterControl.lua:370: in function 'unload'
+	/usr/share/lmod/lmod/libexec/Master.lua:409: in function 'load'
+	/usr/share/lmod/lmod/libexec/MasterControl.lua:285: in function 'load'
+	/usr/share/lmod/lmod/libexec/MasterControl.lua:264: in function 'load_usr'
+	/usr/share/lmod/lmod/libexec/cmdfuncs.lua:423: in function 'cmd'
+	/usr/share/lmod/lmod/libexec/lmod:604: in function 'main'
+	/usr/share/lmod/lmod/libexec/lmod:650: in main chunk
+	[C]: in ?
+/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  cpuset_checked))
+/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  cpuset_checked))
+/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  cpuset_checked))
+/home/s219110279/.conda/envs/typiclust/lib/python3.7/site-packages/torch/utils/data/dataloader.py:557: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 3, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  cpuset_checked))
