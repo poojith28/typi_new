@@ -30,6 +30,8 @@ outputs/
 results/
 figures/
 posthoc_graph_diagnostics/
+THESIS_TOPOCOVER_FINDINGS.md
+THESIS_TOPOCOVER_LIMITATIONS.md
 thesis_appendix_audit/
 thesis_lidcover_fixed_vs_automatic_*/
 topocover_results_download/
