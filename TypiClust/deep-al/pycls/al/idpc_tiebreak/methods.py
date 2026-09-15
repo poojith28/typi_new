@@ -10,14 +10,16 @@ from pycls.al.IDProbCover import _write_idpc_diagnostics
 
 
 class _IDProbCoverTieBreakBase(IDProbCover):
-    def __init__(self, *args, tie_break_mode="min_id", **kwargs):
+    def __init__(self, *args, tie_break_mode="min_id", fallback_mode=None, **kwargs):
         self.tie_break_mode = str(tie_break_mode)
+        self.fallback_mode = str(fallback_mode or tie_break_mode)
         super().__init__(*args, **kwargs)
         self.rng = np.random.default_rng(int(self.seed))
         self.selection_metadata.update({
             "strategy": "id_probcover_tiebreak_policy",
             "selection_mode": "id_prob_cover_tiebreak",
             "tie_break_mode": self.tie_break_mode,
+            "fallback_mode": self.fallback_mode,
         })
 
     def _pick_from_tied_candidates(self, candidates):
@@ -37,7 +39,13 @@ class _IDProbCoverTieBreakBase(IDProbCover):
         pool = np.where((~selected_mask) & (np.arange(self.Nr) >= self.L))[0]
         if pool.size == 0:
             return None
-        return self._pick_from_tied_candidates(pool)
+        if self.fallback_mode == "min_id":
+            return int(pool[np.argmin(self.rel_ids[pool])])
+        if self.fallback_mode == "random":
+            return int(self.rng.choice(pool))
+        if self.fallback_mode == "first_max":
+            return int(pool[0])
+        raise ValueError(f"Unknown fallback_mode: {self.fallback_mode}")
 
     def select_samples(self):
         covered = np.zeros(self.Nr, dtype=bool)
@@ -52,6 +60,8 @@ class _IDProbCoverTieBreakBase(IDProbCover):
         selected_mask = np.zeros(self.Nr, dtype=bool)
         selected_gains = []
         coverage_before = covered.copy()
+        zero_gain_fallback_count = 0
+        first_zero_gain_selection_index = -1
 
         for it in range(self.budgetSize):
             cand_deg = current_degree.copy()
@@ -65,6 +75,9 @@ class _IDProbCoverTieBreakBase(IDProbCover):
             rel_x = self._pick_from_tied_candidates(tied)
 
             if best <= 0:
+                if first_zero_gain_selection_index < 0:
+                    first_zero_gain_selection_index = int(it)
+                zero_gain_fallback_count += 1
                 rel_x = self._pick_fallback_candidate(selected_mask)
                 if rel_x is None:
                     break
@@ -112,6 +125,11 @@ class _IDProbCoverTieBreakBase(IDProbCover):
         radius_stats = _summary_stats(selected_radii)
         gain_stats = _summary_stats(selected_gains)
         median_id = float(np.median(self.rel_ids)) if len(self.rel_ids) else 0.0
+        selected_count = int(len(activeSet))
+        positive_gain_count = selected_count - int(zero_gain_fallback_count)
+        zero_gain_fallback_fraction = (
+            float(zero_gain_fallback_count) / float(selected_count) if selected_count else 0.0
+        )
 
         self.selection_metadata.update({
             "coverage_fraction_before": float(coverage_before.mean()) if len(coverage_before) else 0.0,
@@ -130,6 +148,14 @@ class _IDProbCoverTieBreakBase(IDProbCover):
             "selected_coverage_gain_max": gain_stats["max"],
             "selected_coverage_gain_std": gain_stats["std"],
             "median_local_id": median_id,
+            "positive_gain_count": int(positive_gain_count),
+            "zero_gain_fallback_count": int(zero_gain_fallback_count),
+            "zero_gain_fallback_fraction": zero_gain_fallback_fraction,
+            "first_zero_gain_selection_index": int(first_zero_gain_selection_index),
+            "first_zero_gain_selection_number": (
+                int(first_zero_gain_selection_index + 1)
+                if first_zero_gain_selection_index >= 0 else -1
+            ),
         })
 
         csv_path = str(getattr(self.cfg.ACTIVE_LEARNING, "IDPC_LOG_CSV", "") or "")
@@ -150,6 +176,14 @@ class _IDProbCoverTieBreakBase(IDProbCover):
                 "selected_gain_min": gain_stats["min"],
                 "selected_gain_max": gain_stats["max"],
                 "selected_gain_std": gain_stats["std"],
+                "positive_gain_count": int(positive_gain_count),
+                "zero_gain_fallback_count": int(zero_gain_fallback_count),
+                "zero_gain_fallback_fraction": zero_gain_fallback_fraction,
+                "first_zero_gain_selection_index": int(first_zero_gain_selection_index),
+                "first_zero_gain_selection_number": (
+                    int(first_zero_gain_selection_index + 1)
+                    if first_zero_gain_selection_index >= 0 else -1
+                ),
                 "coverage_fraction_before": self.selection_metadata["coverage_fraction_before"],
                 "coverage_fraction_after": self.selection_metadata["coverage_fraction_after"],
                 "k_id": int(self.k_id),
@@ -175,3 +209,25 @@ class IDProbCoverRandomTieBreak(_IDProbCoverTieBreakBase):
 class IDProbCoverFirstMaxTieBreak(_IDProbCoverTieBreakBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, tie_break_mode="first_max", **kwargs)
+
+
+class IDProbCoverFallbackRandom(_IDProbCoverTieBreakBase):
+    """Historical min-LID gain ties with seeded-random zero-gain fallback.
+
+    This is a clean fallback-only ablation: positive-gain selections retain the
+    historical minimum-LID tie rule, and only batch filling after maximum
+    uncovered gain reaches zero changes.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            *args,
+            tie_break_mode="min_id",
+            fallback_mode="random",
+            **kwargs,
+        )
+        self.selection_metadata.update({
+            "strategy": "id_probcover_fallback_random_policy",
+            "selection_mode": "id_prob_cover_fallback_random",
+            "ablation_scope": "zero_gain_fallback_only",
+        })

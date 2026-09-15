@@ -1,4 +1,5 @@
 import os
+import hashlib
 from collections import deque
 
 import numpy as np
@@ -6,6 +7,11 @@ import numpy as np
 import pycls.datasets.utils as ds_utils
 
 from .adaptive_cover.common import compute_or_load_knn, safe_mkdir, summary_stats
+
+
+def _array_sha256(values):
+    arr = np.ascontiguousarray(np.asarray(values, dtype=np.int64))
+    return hashlib.sha256(arr.view(np.uint8)).hexdigest()
 
 
 def _cache_paths(cache_root, dataset, seed, k_knn):
@@ -61,6 +67,9 @@ class TopoCover:
             "k_knn": int(self.k_knn),
             "cache_root": self.cache_root,
             "recompute_components": bool(self.recompute_components),
+            "requested_budget": int(self.budgetSize),
+            "lset_order_sha256": _array_sha256(self.lSet),
+            "uset_order_sha256": _array_sha256(self.uSet),
         }
 
         self.all_features = ds_utils.load_features(self.ds_name, self.seed).astype(np.float32)
@@ -175,8 +184,10 @@ class TopoCover:
         component_counts = []
         coverage_before = covered.copy()
 
+        stopping_reason = "budget_exhausted"
         for _ in range(self.budgetSize):
             if np.all(covered):
+                stopping_reason = "all_vertices_covered"
                 break
             # Algorithm 1 recomputes components after every greedy selection.
             comp_id, comp_sizes = self._component_ids(~covered)
@@ -185,6 +196,7 @@ class TopoCover:
             rel_x, gain, points = self._best_candidate(comp_id, covered, selected_mask)
             # Algorithm 1, lines 29--30: do not pad with arbitrary samples.
             if rel_x < 0 or gain <= 0:
+                stopping_reason = "no_positive_gain_candidate"
                 break
 
             selected_rel.append(rel_x)
@@ -204,6 +216,9 @@ class TopoCover:
             "coverage_fraction_before": float(coverage_before.mean()) if len(coverage_before) else 0.0,
             "coverage_fraction_after": float(covered.mean()) if len(covered) else 0.0,
             "selected_count": int(len(activeSet)),
+            "returned_fewer_than_budget": bool(len(activeSet) < self.budgetSize),
+            "stopping_reason": stopping_reason,
+            "selected_ids_sha256": _array_sha256(activeSet),
             "selected_component_gain_mean": gain_stats["mean"],
             "selected_component_gain_min": gain_stats["min"],
             "selected_component_gain_max": gain_stats["max"],

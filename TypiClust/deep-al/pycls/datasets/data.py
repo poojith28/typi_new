@@ -122,7 +122,10 @@ class Data:
             norm_std = []
 
             if self.dataset in ["CIFAR10", "CIFAR100", 'IMBALANCED_CIFAR10', 'IMBALANCED_CIFAR100']:
-                ops = [transforms.RandomCrop(32, padding=4)]
+                # Evaluation must be deterministic. CIFAR images are already
+                # 32x32, so no spatial transform is needed at validation/test
+                # time. Training retains the historical padded random crop.
+                ops = [] if self.eval_mode else [transforms.RandomCrop(32, padding=4)]
                 norm_mean = [0.4914, 0.4822, 0.4465]
                 norm_std = [0.247 , 0.2435, 0.2616]
             elif self.dataset == "MNIST":
@@ -130,14 +133,21 @@ class Data:
                 norm_mean = [0.1307,]
                 norm_std = [0.3081,]
             elif self.dataset == "TINYIMAGENET":
-                # ops = [transforms.RandomResizedCrop(64)]
-                ops = [transforms.RandomResizedCrop(64, scale=(0.5, 1.))]
+                ops = (
+                    [transforms.Resize((64, 64))]
+                    if self.eval_mode
+                    else [transforms.RandomResizedCrop(64, scale=(0.5, 1.))]
+                )
 
                 # Using ImageNet values 
                 norm_mean = [0.485, 0.456, 0.406]
                 norm_std = [0.229, 0.224, 0.225]
             elif self.dataset in ["IMAGENET", 'IMAGENET50', 'IMAGENET100', 'IMAGENET200']:
-                ops = [transforms.RandomResizedCrop(224, scale=(0.5, 1.))]
+                ops = (
+                    [transforms.Resize(256), transforms.CenterCrop(224)]
+                    if self.eval_mode
+                    else [transforms.RandomResizedCrop(224, scale=(0.5, 1.))]
+                )
                 # Using ImageNet values
                 norm_mean = [0.485, 0.456, 0.406]
                 norm_std = [0.229, 0.224, 0.225]
@@ -162,9 +172,7 @@ class Data:
             ops.append(transforms.ToTensor())
             ops.append(transforms.Normalize(norm_mean, norm_std))
 
-            if self.eval_mode:
-                ops = [ops[0], transforms.ToTensor(), transforms.Normalize(norm_mean, norm_std)]
-            else:
+            if not self.eval_mode:
                 print("Preprocess Operations Selected ==> ", ops)
                 # logger.info("Preprocess Operations Selected ==> ", ops)
             return ops

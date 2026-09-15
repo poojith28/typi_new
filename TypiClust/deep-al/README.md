@@ -15,9 +15,9 @@ Please see [`GETTING_STARTED`](docs/GETTING_STARTED.md) for brief instructions o
 ### GeometryAutoResearch Example
 
 ```bash
-cd /scratch/s219110279/TypiClust/deep-al
-python tools/train_al.py \
-  --cfg configs/cifar10/al/RESNET18.yaml \
+cd TypiClust/deep-al/tools
+python train_al.py \
+  --cfg ../configs/cifar10/al/RESNET18.yaml \
   --exp-name cifar10_geoar_demo \
   --al geometry_auto_research \
   --budget 1000 \
@@ -30,9 +30,9 @@ To tune the prototype, set `ACTIVE_LEARNING.GEOAR_*` values in the config file, 
 ### IDProbCover Example
 
 ```bash
-cd /scratch/s219110279/TypiClust/deep-al
-python tools/train_al.py \
-  --cfg configs/cifar100/al/RESNET18.yaml \
+cd TypiClust/deep-al/tools
+python train_al.py \
+  --cfg ../configs/cifar100/al/RESNET18.yaml \
   --exp-name cifar100_idprobcover_demo \
   --al id_prob_cover \
   --budget 50 \

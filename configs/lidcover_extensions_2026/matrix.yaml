@@ -1,0 +1,46 @@
+schema: lidcover_extensions_2026_v1
+project_root: /vast/s219110279
+output_root: /vast/s219110279/experiments/lidcover_extensions_2026/outputs
+representation_root: /vast/s219110279/results/results
+backbone: resnet18
+seeds: [1, 2, 3, 4, 5]
+feature_normalisation: rowwise_l2_float32_eps_1e-12
+driver_radius_schedule:
+  cold_start: 1.35
+  post_cold_start: 0.85
+auto_radius:
+  datasets: [CIFAR10, CIFAR100, TINYIMAGENET]
+  methods: [probcover_auto_radius_v2, lidcover_auto_radius_v2]
+  batch_size: 50
+  max_iter: 100
+  k: 50
+  statistic: median_50th_neighbour_distance
+  labels_used: false
+batch_size:
+  dataset: CIFAR100
+  methods: [probcover_batch_size_v2, lidcover_batch_size_v2]
+  delta0: 0.25
+  batch_sizes: [50, 100, 500]
+  common_budgets: [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+tie_fallback:
+  dataset: CIFAR100
+  methods:
+    - lidcover_tf_minlid_minlid
+    - lidcover_tf_minlid_random
+    - lidcover_tf_random_minlid
+    - lidcover_tf_random_random
+  delta0: 0.25
+  batch_size: 50
+  max_iter: 100
+sparse_fixed_optional:
+  dataset: CIFAR100
+  method: sparsefixedcover_v1
+  delta0: 0.25
+  batch_size: 50
+  max_iter: 100
+  tie_and_fallback_rule: first_relative_index
+lidcover_parameters:
+  alpha: 1.0
+  k_id: 50
+  k_knn: 50
+  mode: high_id_more_centers

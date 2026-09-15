@@ -29,6 +29,24 @@ def _default_sampling_metadata(strategy_name, active_set=None):
     }
 
 
+def _auto_delta_metadata(cfg, effective_delta):
+    base_delta = float(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_BASE', 0.0))
+    return {
+        'auto_delta_active': True,
+        'auto_delta_rule': str(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_RULE', '')),
+        'auto_delta_base': base_delta,
+        'auto_delta_k': int(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_K', 50)),
+        'auto_delta_quantile': float(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_QUANTILE', 0.5)),
+        'auto_delta_feature_sha256': str(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_FEATURE_SHA256', '')),
+        'auto_delta_indices_sha256': str(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_INDICES_SHA256', '')),
+        'auto_delta_provenance_path': str(getattr(cfg.ACTIVE_LEARNING, 'AUTO_DELTA_PROVENANCE_PATH', '')),
+        'effective_delta': float(effective_delta),
+        'auto_delta_driver_scale': float(effective_delta / base_delta) if base_delta > 0.0 else 0.0,
+        'labels_used_for_auto_delta': False,
+        'validation_or_test_accuracy_used_for_auto_delta': False,
+    }
+
+
 @torch.no_grad()
 def _extract_penultimate_features(data_obj, cfg, clf_model, dataset, indexes):
     indexes = np.asarray(indexes, dtype=np.int64)
@@ -224,11 +242,93 @@ class ActiveLearning:
             activeSet, uSet = tpc.select_samples()
             self.latest_sampling_metadata = _default_sampling_metadata('typiclust_policy', activeSet)
 
+        elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["probcover_auto_delta", "prob_cover_auto_delta"]:
+            from .prob_cover import ProbCover
+            probcov = ProbCover(self.cfg, lSet, uSet, budgetSize=self.cfg.ACTIVE_LEARNING.BUDGET_SIZE,
+                            delta=self.cfg.ACTIVE_LEARNING.INITIAL_DELTA)
+            activeSet, uSet = probcov.select_samples()
+            self.latest_sampling_metadata = {
+                **_default_sampling_metadata('probcover_auto_delta_policy', activeSet),
+                **_auto_delta_metadata(self.cfg, self.cfg.ACTIVE_LEARNING.INITIAL_DELTA),
+                'selection_mode': 'prob_cover_auto_delta',
+            }
+
         elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["prob_cover", 'probcover']:
             from .prob_cover import ProbCover
             probcov = ProbCover(self.cfg, lSet, uSet, budgetSize=self.cfg.ACTIVE_LEARNING.BUDGET_SIZE,
                             delta=self.cfg.ACTIVE_LEARNING.INITIAL_DELTA)
             activeSet, uSet = probcov.select_samples()
+
+        elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in [
+            "talc",
+            "trajectory_adaptive_lid_cover",
+            "talc_auto_delta",
+        ]:
+            from .talc import TrajectoryAdaptiveLIDCover
+
+            sampler_name = self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower()
+            talc = TrajectoryAdaptiveLIDCover(
+                cfg=self.cfg,
+                lSet=lSet,
+                uSet=uSet,
+                budgetSize=self.cfg.ACTIVE_LEARNING.BUDGET_SIZE,
+                delta0=self.cfg.ACTIVE_LEARNING.INITIAL_DELTA,
+                alpha_max=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_ALPHA_MAX', 1.0)),
+                coverage_target=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_COVERAGE_TARGET', 0.9)),
+                coverage_epsilon=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_COVERAGE_EPSILON', 0.05)),
+                radius_min_factor=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_RADIUS_MIN_FACTOR', 0.5)),
+                radius_max_factor=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_RADIUS_MAX_FACTOR', 2.0)),
+                topology_weight=float(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_TOPOLOGY_WEIGHT', 0.5)),
+                topology_quantiles=tuple(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_TOPOLOGY_QUANTILES', [0.25, 0.5, 0.75])),
+                min_component_size=int(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_MIN_COMPONENT_SIZE', 5)),
+                use_topology=bool(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_USE_TOPOLOGY', True)),
+                use_uncertainty=bool(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_USE_UNCERTAINTY', True)),
+                cache_root=str(getattr(self.cfg.ACTIVE_LEARNING, 'TALC_CACHE_ROOT', './talc_cache') or './talc_cache'),
+                k_id=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_ID', 50)),
+                k_knn=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_KNN', 50)),
+                l2_normalize_features=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_L2_NORMALIZE_FEATURES', True)),
+                prefer_faiss=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_PREFER_FAISS', True)),
+                faiss_gpu=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_FAISS_GPU', True)),
+                add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_ADD_SELF_COVER', True)),
+                clf_model=clf_model,
+                train_dataset=trainDataset,
+                data_obj=self.dataObj,
+            )
+            activeSet, uSet = talc.select_samples()
+            self.latest_sampling_metadata = getattr(talc, 'selection_metadata', {})
+            if sampler_name == "talc_auto_delta":
+                self.latest_sampling_metadata = {
+                    **self.latest_sampling_metadata,
+                    **_auto_delta_metadata(self.cfg, self.cfg.ACTIVE_LEARNING.INITIAL_DELTA),
+                    'strategy': 'trajectory_adaptive_lid_cover_auto_delta',
+                    'selection_mode': 'talc_auto_delta',
+                }
+
+        elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["lidcover_auto_delta", "idprobcover_auto_delta"]:
+            from .IDprocover import IDProbCover
+            idpc = IDProbCover(
+                cfg=self.cfg,
+                lSet=lSet,
+                uSet=uSet,
+                budgetSize=self.cfg.ACTIVE_LEARNING.BUDGET_SIZE,
+                delta0=self.cfg.ACTIVE_LEARNING.INITIAL_DELTA,
+                alpha=float(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_ALPHA', 1.0)),
+                mode=str(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_MODE', 'high_id_more_centers')),
+                cache_root=str(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_CACHE_ROOT', './idprobcover_cache') or './idprobcover_cache'),
+                k_id=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_ID', 50)),
+                k_knn=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_KNN', 50)),
+                l2_normalize_features=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_L2_NORMALIZE_FEATURES', True)),
+                prefer_faiss=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_PREFER_FAISS', True)),
+                faiss_gpu=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_FAISS_GPU', True)),
+                add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_ADD_SELF_COVER', True)),
+            )
+            activeSet, uSet = idpc.select_samples()
+            self.latest_sampling_metadata = {
+                **getattr(idpc, 'selection_metadata', {}),
+                **_auto_delta_metadata(self.cfg, self.cfg.ACTIVE_LEARNING.INITIAL_DELTA),
+                'strategy': 'lidcover_auto_delta_policy',
+                'selection_mode': 'lidcover_auto_delta',
+            }
 
         elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["id_prob_cover", "idprobcover", "idprobcover_frontier_density", "id_prob_cover_frontier_density"]:
             from .IDprocover import IDProbCover
@@ -296,6 +396,27 @@ class ActiveLearning:
         elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["idprobcover_tiebreak_first_max", "idprobcover_firstmax_tiebreak"]:
             from .idpc_tiebreak import IDProbCoverFirstMaxTieBreak
             idpc = IDProbCoverFirstMaxTieBreak(
+                cfg=self.cfg,
+                lSet=lSet,
+                uSet=uSet,
+                budgetSize=self.cfg.ACTIVE_LEARNING.BUDGET_SIZE,
+                delta0=self.cfg.ACTIVE_LEARNING.INITIAL_DELTA,
+                alpha=float(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_ALPHA', 1.0)),
+                mode=str(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_MODE', 'high_id_more_centers')),
+                cache_root=str(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_CACHE_ROOT', './idprobcover_cache') or './idprobcover_cache'),
+                k_id=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_ID', 50)),
+                k_knn=int(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_K_KNN', 50)),
+                l2_normalize_features=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_L2_NORMALIZE_FEATURES', True)),
+                prefer_faiss=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_PREFER_FAISS', True)),
+                faiss_gpu=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_FAISS_GPU', True)),
+                add_self_cover=bool(getattr(self.cfg.ACTIVE_LEARNING, 'IDPC_ADD_SELF_COVER', True)),
+            )
+            activeSet, uSet = idpc.select_samples()
+            self.latest_sampling_metadata = getattr(idpc, 'selection_metadata', {})
+
+        elif self.cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ["idprobcover_fallback_random", "lidcover_fallback_random"]:
+            from .idpc_tiebreak import IDProbCoverFallbackRandom
+            idpc = IDProbCoverFallbackRandom(
                 cfg=self.cfg,
                 lSet=lSet,
                 uSet=uSet,

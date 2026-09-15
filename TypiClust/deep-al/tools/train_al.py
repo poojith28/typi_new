@@ -24,6 +24,7 @@ from pycls.core.config import cfg, dump_cfg
 import pycls.core.losses as losses
 import pycls.core.optimizer as optim
 from pycls.datasets.data import Data
+from pycls.datasets.initial_lset import load_provided_initial_lset
 import pycls.utils.checkpoint as cu
 import pycls.utils.logging as lu
 import pycls.utils.metrics as mu
@@ -48,8 +49,15 @@ delta_std_lst = []
 ADAPTIVE_COVER_METHODS = {
     'prob_cover',
     'probcover',
+    'probcover_auto_delta',
+    'prob_cover_auto_delta',
     'id_prob_cover',
     'idprobcover',
+    'lidcover_auto_delta',
+    'idprobcover_auto_delta',
+    'talc',
+    'trajectory_adaptive_lid_cover',
+    'talc_auto_delta',
     'idprobcover_frontier_density',
     'id_prob_cover_frontier_density',
     'idprobcover_tiebreak_min_id',
@@ -66,6 +74,13 @@ ADAPTIVE_COVER_METHODS = {
     'adaptive_distance_variance_cover',
     'distance_cv_cover',
     'adaptive_distance_cv_cover',
+}
+AUTO_DELTA_METHODS = {
+    'probcover_auto_delta',
+    'prob_cover_auto_delta',
+    'lidcover_auto_delta',
+    'idprobcover_auto_delta',
+    'talc_auto_delta',
 }
 
 
@@ -206,6 +221,7 @@ def argparser():
     parser.add_argument('--al', help='AL Method', required=True, type=str)
     parser.add_argument('--budget', help='Budget Per Round', required=True, type=int)
     parser.add_argument('--initial_size', help='Size of the initial random labeled set', default=0, type=int)
+    parser.add_argument('--init_lset_path', help='Ordered .npy IDs for an explicit shared initial labelled set', default=None, type=str)
     parser.add_argument('--seed', help='Random seed', default=1, type=int)
     parser.add_argument('--finetune', help='Whether to continue with existing model between rounds', type=str2bool, default=False)
     parser.add_argument('--linear_from_features', help='Whether to use a linear layer from self-supervised features', action='store_true')
@@ -217,6 +233,17 @@ def argparser():
     parser.add_argument('--idpc_eps', help='IDProbCover numerical stability epsilon', default=None, type=float)
     parser.add_argument('--idpc_log_csv', help='Optional CSV path for IDProbCover diagnostics', default=None, type=str)
     parser.add_argument('--idpc_cache_root', help='Optional cache root reserved for IDProbCover artifacts', default=None, type=str)
+    parser.add_argument('--auto_delta_k', help='Neighbour rank for automatic base-radius selection', default=None, type=int)
+    parser.add_argument('--auto_delta_quantile', help='Quantile of k-th-neighbour distances used as the automatic base radius', default=None, type=float)
+    parser.add_argument('--auto_delta_cache_root', help='Content-hashed cache root for automatic base-radius selection', default=None, type=str)
+    parser.add_argument('--talc_alpha_max', help='TALC maximum local-ID radius exponent', default=None, type=float)
+    parser.add_argument('--talc_coverage_target', help='TALC coverage fraction at which the structural curriculum is mature', default=None, type=float)
+    parser.add_argument('--talc_coverage_epsilon', help='Allowed relative loss from the maximum greedy coverage gain', default=None, type=float)
+    parser.add_argument('--talc_topology_weight', help='Late-curriculum topology weight; remaining weight is margin uncertainty', default=None, type=float)
+    parser.add_argument('--talc_min_component_size', help='Minimum reference component size used by TALC topology', default=None, type=int)
+    parser.add_argument('--talc_use_topology', help='Enable TALC multiscale component representation', type=str2bool, default=None)
+    parser.add_argument('--talc_use_uncertainty', help='Enable TALC late-stage margin uncertainty', type=str2bool, default=None)
+    parser.add_argument('--talc_cache_root', help='Cache root for TALC geometry and component partitions', default=None, type=str)
     parser.add_argument('--arc_alpha', help='Adaptive-cover radius scaling strength', default=None, type=float)
     parser.add_argument('--arc_k_signal', help='Adaptive-cover neighbors for local scaling signal estimation', default=None, type=int)
     parser.add_argument('--arc_k_knn', help='Adaptive-cover neighbors for coverage graph construction', default=None, type=int)
@@ -328,9 +355,97 @@ def main(cfg):
 
     lSet, uSet, valSet = data_obj.loadPartitions(lSetPath=cfg.ACTIVE_LEARNING.LSET_PATH, \
             uSetPath=cfg.ACTIVE_LEARNING.USET_PATH, valSetPath = cfg.ACTIVE_LEARNING.VALSET_PATH)
+
+    provided_initial_sampling_record = {}
+    if cfg.ACTIVE_LEARNING.INIT_LSET_PATH:
+        if args.initial_size != 0 or len(lSet) != 0:
+            raise ValueError(
+                'An explicit INIT_LSET_PATH requires --initial_size=0 and an empty generated lSet.'
+            )
+        lSet, uSet, initial_lset_metadata = load_provided_initial_lset(
+            cfg.ACTIVE_LEARNING.INIT_LSET_PATH,
+            uSet,
+            valSet,
+            train_size,
+            cfg.ACTIVE_LEARNING.BUDGET_SIZE,
+        )
+        cfg.ACTIVE_LEARNING.INIT_LSET_PATH = initial_lset_metadata['source_path']
+        cfg.ACTIVE_LEARNING.INIT_LSET_SHA256 = initial_lset_metadata['source_file_sha256']
+        cfg.ACTIVE_LEARNING.INIT_LSET_ORDERED_SHA256 = initial_lset_metadata['ordered_int64_sha256']
+        cfg.ACTIVE_LEARNING.INIT_LSET_COUNT = initial_lset_metadata['count']
+        cfg.ACTIVE_LEARNING.LSET_PATH = data_obj.saveSet(lSet, 'lSet', cfg.EXP_DIR)
+        cfg.ACTIVE_LEARNING.USET_PATH = data_obj.saveSet(uSet, 'uSet', cfg.EXP_DIR)
+        dump_cfg(cfg)
+        with open(os.path.join(cfg.EXP_DIR, 'initial_lset_provenance.json'), 'w') as handle:
+            json.dump(initial_lset_metadata, handle, indent=2)
+        provided_initial_sampling_record = {
+            'stage': 'provided_initial_lset',
+            'seed': int(cfg.RNG_SEED),
+            'sampling_fn': 'provided_initial_lset',
+            'labeled_count_before_sampling': 0,
+            'unlabeled_count_before_sampling': int(len(uSet) + len(lSet)),
+            'labeled_count_after_sampling': int(len(lSet)),
+            'unlabeled_count_after_sampling': int(len(uSet)),
+            'active_set_size': int(len(lSet)),
+            'active_set_ids': [int(idx) for idx in lSet.tolist()],
+            'acquisition_time_sec': 0.0,
+            'timing': {
+                'acquisition_time_sec': 0.0,
+                'has_sampling': False,
+                'is_provided_initial_lset': True,
+            },
+            'sampling_metadata': {
+                'initialisation_type': 'seed_specific_shared_random_50',
+                'source_path': initial_lset_metadata['source_path'],
+                'source_file_sha256': initial_lset_metadata['source_file_sha256'],
+                'ordered_int64_sha256': initial_lset_metadata['ordered_int64_sha256'],
+            },
+        }
+        print(
+            'Loaded provided initial labelled set: count={} sha256={} source={}'.format(
+                len(lSet), initial_lset_metadata['source_file_sha256'],
+                initial_lset_metadata['source_path']
+            )
+        )
+
+    if cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in AUTO_DELTA_METHODS:
+        if len(lSet) != 0:
+            raise ValueError(
+                'Automatic-delta evidence requires the canonical empty cold start; '
+                f'found initial labeled size {len(lSet)}.'
+            )
+        from pycls.al.auto_delta import resolve_auto_delta, write_run_provenance
+
+        candidate_indices = np.concatenate([lSet, uSet]).astype(np.int64, copy=False)
+        probcover_base_delta, auto_delta_metadata = resolve_auto_delta(cfg, candidate_indices)
+        cfg.ACTIVE_LEARNING.INITIAL_DELTA = float(probcover_base_delta)
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_RULE = str(auto_delta_metadata['rule'])
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_BASE = float(probcover_base_delta)
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_FEATURE_SHA256 = str(auto_delta_metadata['feature_sha256'])
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_INDICES_SHA256 = str(auto_delta_metadata['candidate_indices_sha256'])
+        provenance_path = os.path.join(cfg.EXP_DIR, 'auto_delta_provenance.json')
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_PROVENANCE_PATH = provenance_path
+        auto_delta_metadata = {
+            **auto_delta_metadata,
+            'run_provenance_path': provenance_path,
+            'driver_cold_start_scale': 1.35,
+            'driver_post_label_scale': 0.85,
+        }
+        write_run_provenance(cfg.EXP_DIR, auto_delta_metadata)
+        dump_cfg(cfg)
+        print(
+            'Automatic base radius resolved: rule={} delta_auto={:.8f} k={} quantile={} '
+            'feature_sha256={}'.format(
+                auto_delta_metadata['rule'],
+                probcover_base_delta,
+                auto_delta_metadata['k'],
+                auto_delta_metadata['quantile'],
+                auto_delta_metadata['feature_sha256'],
+            )
+        )
     model = model_builder.build_model(cfg).cuda()
 
-    initial_sampling_record = {}
+    initial_sampling_record = provided_initial_sampling_record
 
     if len(lSet) == 0:
         if cfg.ACTIVE_LEARNING.SAMPLING_FN.lower() in ['dcom']:
@@ -356,6 +471,9 @@ def main(cfg):
             'labeled_count_after_sampling': int(len(lSet) + len(activeSet)),
             'unlabeled_count_after_sampling': int(len(new_uSet)),
             'active_set_size': int(len(activeSet)),
+            'active_set_ids': [
+                int(idx) for idx in np.asarray(activeSet, dtype=np.int64).tolist()
+            ],
             'acquisition_time_sec': float(initial_acquisition_time_sec),
             'timing': {
                 'acquisition_time_sec': float(initial_acquisition_time_sec),
@@ -370,8 +488,12 @@ def main(cfg):
         with open(os.path.join(cfg.EXP_DIR, 'initial_sampling_summary.json'), 'w') as handle:
             json.dump(initial_sampling_record, handle, indent=2)
         print(f'Initial Pool is {activeSet}')
-        # Save current lSet, new_uSet and activeSet in the episode directory
-        # data_obj.saveSets(lSet, uSet, activeSet, cfg.EPISODE_DIR)
+        # Preserve the complete cold-start trajectory, including the ordered
+        # pre-acquisition pool required to reproduce deterministic tie breaks.
+        initial_dir = os.path.join(cfg.EXP_DIR, 'initial_pool')
+        os.makedirs(initial_dir, exist_ok=True)
+        data_obj.saveSets(lSet, uSet, activeSet, initial_dir)
+        data_obj.saveSet(new_uSet, 'new_uSet', initial_dir)
         # Add activeSet to lSet, save new_uSet as uSet and update dataloader for the next episode
         lSet = np.append(lSet, activeSet).astype(np.int64, copy=False)
         uSet = np.asarray(new_uSet, dtype=np.int64)
@@ -973,6 +1095,8 @@ if __name__ == "__main__":
     cfg.EXP_NAME = args.exp_name
     cfg.ACTIVE_LEARNING.SAMPLING_FN = args.al
     cfg.ACTIVE_LEARNING.BUDGET_SIZE = args.budget
+    if args.init_lset_path is not None:
+        cfg.ACTIVE_LEARNING.INIT_LSET_PATH = args.init_lset_path
     cfg.ACTIVE_LEARNING.INITIAL_DELTA = args.initial_delta
     cfg.RNG_SEED = args.seed
     cfg.MODEL.LINEAR_FROM_FEATURES = args.linear_from_features
@@ -992,6 +1116,28 @@ if __name__ == "__main__":
         cfg.ACTIVE_LEARNING.IDPC_LOG_CSV = args.idpc_log_csv
     if args.idpc_cache_root is not None:
         cfg.ACTIVE_LEARNING.IDPC_CACHE_ROOT = args.idpc_cache_root
+    if args.auto_delta_k is not None:
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_K = args.auto_delta_k
+    if args.auto_delta_quantile is not None:
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_QUANTILE = args.auto_delta_quantile
+    if args.auto_delta_cache_root is not None:
+        cfg.ACTIVE_LEARNING.AUTO_DELTA_CACHE_ROOT = args.auto_delta_cache_root
+    if args.talc_alpha_max is not None:
+        cfg.ACTIVE_LEARNING.TALC_ALPHA_MAX = args.talc_alpha_max
+    if args.talc_coverage_target is not None:
+        cfg.ACTIVE_LEARNING.TALC_COVERAGE_TARGET = args.talc_coverage_target
+    if args.talc_coverage_epsilon is not None:
+        cfg.ACTIVE_LEARNING.TALC_COVERAGE_EPSILON = args.talc_coverage_epsilon
+    if args.talc_topology_weight is not None:
+        cfg.ACTIVE_LEARNING.TALC_TOPOLOGY_WEIGHT = args.talc_topology_weight
+    if args.talc_min_component_size is not None:
+        cfg.ACTIVE_LEARNING.TALC_MIN_COMPONENT_SIZE = args.talc_min_component_size
+    if args.talc_use_topology is not None:
+        cfg.ACTIVE_LEARNING.TALC_USE_TOPOLOGY = args.talc_use_topology
+    if args.talc_use_uncertainty is not None:
+        cfg.ACTIVE_LEARNING.TALC_USE_UNCERTAINTY = args.talc_use_uncertainty
+    if args.talc_cache_root is not None:
+        cfg.ACTIVE_LEARNING.TALC_CACHE_ROOT = args.talc_cache_root
     if args.arc_alpha is not None:
         cfg.ACTIVE_LEARNING.ARC_ALPHA = args.arc_alpha
     if args.arc_k_signal is not None:

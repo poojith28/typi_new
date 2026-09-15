@@ -2,7 +2,12 @@
 .cache/
 .conda/
 .venv_diag/
+.venv/
 .vscode/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*$py.class
 idpc_cache/
 merge_tree_cover_cache/
 topocover_cache/
@@ -10,19 +15,47 @@ topocover_cache_d070/
 topocover_cache_paper/
 topocover_cache_variants/
 maxherding_50b_20260528/
+talc_cache/
+adaptive_cover_cache/
+**/idprobcover_cache/
+**/matplotlib-cache/
+experiments/**/cache/
+experiments/**/locks/
+experiments/**/logs/
+experiments/**/outputs/
 
 # Generated outputs
+output/
 outputs/
 results/
 figures/
 posthoc_graph_diagnostics/
+thesis_appendix_audit/
+thesis_lidcover_fixed_vs_automatic_*/
+topocover_results_download/
+tables/
+cross_backbone*_verified.csv
+evidence/**/*.csv
+evidence/**/*.json
 
 # Large data
+data/
 evidence_pack/
 backups/
+TypiClust/data/
+TypiClust/scan/datasets/
 
 # Temporary files
 *.err
 *.out
+*.log
 *.vsix
+*.lock
+*.tmp
+submitted*.txt
+*_job_id.txt
+*_job_ids.txt
+.env
+.env.*
+!.env.example
 1ca9ade29136f7e2bc3db142e2e7ae3a55541142463c281b75ddae3912195082

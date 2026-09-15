@@ -24,7 +24,7 @@ Useful entry points:
 - `scan/selflabel.py`
 - `scan/eval.py`
 
-See [scan/README.md](/scratch/s219110279/TypiClust/scan/README.md) for the original SCAN usage details.
+See [scan/README.md](scan/README.md) for the original SCAN usage details.
 
 ### `deep-al/`
 
@@ -42,7 +42,7 @@ Useful entry points:
 - `deep-al/tools/analyze_id_stability.py`
 - `deep-al/tools/analyze_reviewer_experiments.py`
 
-See [deep-al/README.md](/scratch/s219110279/TypiClust/deep-al/README.md) for method-specific details.
+See [deep-al/README.md](deep-al/README.md) for method-specific details.
 
 ## Custom Methods Added In This Fork
 
@@ -94,7 +94,7 @@ Install dependencies for the part you want to run. In practice, it is usually ea
 Example:
 
 ```bash
-cd /scratch/s219110279/TypiClust
+cd TypiClust
 
 # for SCAN experiments
 pip install -r scan/requirements.txt
@@ -108,7 +108,7 @@ pip install -r deep-al/requirements.txt
 ### Run SCAN
 
 ```bash
-cd /scratch/s219110279/TypiClust/scan
+cd TypiClust/scan
 python simclr.py --config_env configs/env.yml --config_exp configs/pretext/simclr_cifar10.yml
 python scan.py --config_env configs/env.yml --config_exp configs/scan/scan_cifar10.yml
 python selflabel.py --config_env configs/env.yml --config_exp configs/selflabel/selflabel_cifar10.yml
@@ -117,20 +117,22 @@ python selflabel.py --config_env configs/env.yml --config_exp configs/selflabel/
 ### Run Active Learning
 
 ```bash
-cd /scratch/s219110279/TypiClust/deep-al
-python tools/train_al.py \
-  --cfg configs/cifar10/al/RESNET18.yaml \
+cd TypiClust/deep-al/tools
+python train_al.py \
+  --cfg ../configs/cifar10/al/RESNET18.yaml \
   --exp-name cifar10_run \
   --al typiclust \
+  --budget 50 \
+  --initial_size 50 \
   --seed 1
 ```
 
 ### Run Custom IDProbCover Experiment
 
 ```bash
-cd /scratch/s219110279/TypiClust/deep-al
-python tools/train_al.py \
-  --cfg configs/cifar100/al/RESNET18.yaml \
+cd TypiClust/deep-al/tools
+python train_al.py \
+  --cfg ../configs/cifar100/al/RESNET18.yaml \
   --exp-name cifar100_idprobcover \
   --al id_prob_cover \
   --budget 50 \
@@ -160,22 +162,6 @@ For cleaner experiment tracking, record at minimum:
 - dataset split and feature extractor settings
 
 Several helper scripts in `deep-al/tools/` are already included for reviewer runs, ablations, and post-hoc analysis.
-
-## Git Backup
-
-This repository is now connected to:
-
-- `origin`: `https://github.com/poojith28/TypiClust.git`
-
-Typical backup flow:
-
-```bash
-cd /scratch/s219110279/TypiClust
-git status
-git add -A
-git commit -m "Describe your experiment changes"
-git push origin main
-```
 
 ## Acknowledgement
 
